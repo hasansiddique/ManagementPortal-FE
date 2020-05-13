@@ -16,6 +16,10 @@ export const requestUserPasswordReset = createAction();
 export const userPasswordResetSuccess = createAction();
 export const userPasswordResetFailure = createAction();
 
+export const requestUserPasswordUpdate = createAction();
+export const userPasswordUpdateSuccess = createAction();
+export const userPasswordUpdateFailure = createAction();
+
 export const requestVerifyUserEmail = createAction();
 export const verifyUserEmailSuccess = createAction();
 export const verifyUserEmailFailure = createAction();
@@ -23,3 +27,5 @@ export const verifyUserEmailFailure = createAction();
 export const requestResendUserVerification = createAction();
 export const resendUserVerificationSuccess = createAction((email) => ({ email }));
 export const resendUserVerificationFailure = createAction();
+
+

@@ -27,7 +27,13 @@ export const EMAIL_VERIFYING = 'EMAIL_VERIFYING';
 export const EMAIL_VERIFIED = 'EMAIL_VERIFIED';
 export const EMAIL_VERIFICATION_CONFLICT = 'EMAIL_VERIFICATION_CONFLICT';
 
-export const AUTH_ROUTES = ['/', '/user', '/user/login', '/user/register', '/user/logout', '/user/forgot-password', '/user/reset-password', '/user/verify/:token'];
+export const AUTH_ROUTES = ['/', '/user', '/user/login', '/user/register', '/user/logout','/user/update-password', '/user/forgot-password', '/user/reset-password', '/user/verify/:token'];
+
+export const USER_STATE = {
+  ADMIN_FULL: 1,
+  ADMIN_PARTIAL: 2,
+  EMPLOYEE: 0,
+}
 
 export const POLL_OPERATION = {
   SVC_CREATE: 'SVC_CREATE',
@@ -96,3 +102,4 @@ export const REQUEST_STATE = {
   FAILURE: 'FAILURE',
   SUCCESS: 'SUCCESS',
 };
+

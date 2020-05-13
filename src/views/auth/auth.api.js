@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import CryptoJS from 'crypto-js';
 
 import request from '../../common/request';
 import storage from '../../common/storage';
@@ -28,6 +29,12 @@ import {
   requestResendUserVerification,
   resendUserVerificationSuccess,
   resendUserVerificationFailure,
+
+    requestUserPasswordUpdate,
+    userPasswordUpdateSuccess,
+    userPasswordUpdateFailure,
+
+
 } from './auth.actions';
 
 export const getUser = () => {
@@ -35,10 +42,16 @@ export const getUser = () => {
     dispatch(requestUserLogin());
 
     try {
-      const userId = get(storage.get('user'), 'id');
+      const userId = get(storage.get('user'), 'user.id');
       const res = await request.get(`/v1/users/${userId}`);
-      dispatch(userLoginSuccess(res.data || {}));
-
+      dispatch(userLoginSuccess(res.data|| {}));
+      // Encrypt
+      const encryptData = CryptoJS.AES.encrypt(JSON.stringify(res.data), 'secret key 123').toString();
+      console.log('encryptedData', encryptData)
+      // Decrypt
+      const bytes  = CryptoJS.AES.decrypt(encryptData, 'secret key 123');
+      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      console.log('decryptedData', decryptedData);
       return res;
     } catch (err) {
       dispatch(userLoginFailure(err));
@@ -69,9 +82,8 @@ export const loginUser = (payload) => {
       const res = await request.post('/v1/users/login', payload);
 
       dispatch(userLoginSuccess(res.data || {}));
-      storage.set('user', Object.assign(res.data, {}));
+      storage.set('user', Object.assign({}, res.data));
       window.location.reload();
-
       return res;
     } catch (err) {
       dispatch(userLoginFailure(err));
@@ -125,8 +137,10 @@ export const logoutUser = () => {
   return async (dispatch) => {
     dispatch(requestUserLogout());
     try {
-      const userId = get(storage.get('user'), 'id');
-      const res = await request.post(`/v1/users/${userId}/logout`);
+      const refreshToken = get(storage.get('user'), 'token.refreshToken');
+      const data = { token: refreshToken };
+      const payload = JSON.stringify(data);
+      const res = await request.post(`/v1/users/logout`, payload);
       dispatch(userLogoutSuccess());
       storage.clear();
 
@@ -141,6 +155,23 @@ export const logoutUser = () => {
   };
 };
 
+export const refreshToken = () => {
+  return async () => {
+    try {
+      const refreshToken = get(storage.get('user'), 'token.refreshToken');
+      const obj = storage.get('user');
+      const data = { token: refreshToken };
+      const payload = JSON.stringify(data);
+      const res = await request.post(`/v1/users/token`, payload);
+      storage.set('user', Object.assign(obj,{token: {accessToken: res.data.accessToken, refreshToken: obj.token.refreshToken}}));
+      return res;
+    } catch (err) {
+      if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
+        storage.clear();
+      }
+    }
+  };
+};
 
 export const userPasswordReset = (data) => {
   return async (dispatch) => {
@@ -148,7 +179,7 @@ export const userPasswordReset = (data) => {
 
     try {
       const res = await request.post('/v1/users/reset-password', data);
-      dispatch(userPasswordResetSuccess(res.data));
+      dispatch(userPasswordResetSuccess());
       return res;
     } catch (err) {
       dispatch(userPasswordResetFailure());
@@ -226,6 +257,41 @@ export const resendEmailVerification = (data) => {
           type: 'error',
           title: 'User Account',
           description: 'Email is already confirmed.',
+        });
+      }
+    }
+    return null;
+  };
+};
+
+export const userPasswordUpdate = (payload) => {
+  return async (dispatch) => {
+    dispatch(requestUserPasswordUpdate());
+
+    try {
+      const res = await request.put('/v1/users/update-password', payload);
+      dispatch(userPasswordUpdateSuccess());
+      if (res.status === 200) {
+        openNotification({
+          type: 'success',
+          title: 'User Login',
+          description: 'Password SuccessFully Updated',
+        });
+      }
+      return res;
+    } catch (err) {
+      dispatch(userPasswordUpdateFailure());
+      if (err.response.status === HTTP_STATUS.BAD_REQUEST) {
+        openNotification({
+          type: 'error',
+          title: 'User Login',
+          description: 'Some thing went wrong while making the request',
+        });
+      } else {
+        openNotification({
+          type: 'error',
+          title: 'User Account',
+          description: 'Some thing went wrong while making the request',
         });
       }
     }
