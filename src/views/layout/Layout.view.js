@@ -10,13 +10,8 @@ import { getUser, refreshToken } from '../auth/auth.api';
 import storage from '../../common/storage';
 import { AUTH_ROUTES, USER_STATE } from '../../common/constants';
 
-
 const Layout = ({
-  history,
-  location,
-  getUserFromApi,
-  isAuthenticated,
-  refreshToken,
+  history, location, getUserFromApi, isAuthenticated, refToken,
 }) => {
   const adminAccess = () => {
     const admin1 = get(storage.get('user'), 'user.typeOfId') === USER_STATE.ADMIN_FULL;
@@ -37,26 +32,27 @@ const Layout = ({
       );
     } else if (isAuthenticated && employee && location && location.pathname) {
       history.push(
-        AUTH_ROUTES.includes(location.pathname)
-          ? '/employee'
-          : '/employee',
+        AUTH_ROUTES.includes(location.pathname) ? '/employee' : '/employee',
       );
     } else if (!isAuthenticated && get(storage.get('user'), 'token')) {
       getUserFromApi();
     }
     // eslint-disable-next-line
-  },[getUserFromApi, isAuthenticated, history]);
+  }, [getUserFromApi, isAuthenticated, history]);
 
   // it will automatically sends refresh token if access token is not valid
-  axios.interceptors.response.use((response) => {
-    return response;
-  }, (error) => {
-    if (error.response.status === 401) {
-      refreshToken();
-      window.location.reload();
-    }
-    return Promise.reject(error);
-  });
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        refToken();
+        window.location.reload();
+      }
+      return Promise.reject(error);
+    },
+  );
 
   return [
     <Fragment key="redirect">
@@ -70,13 +66,11 @@ const Layout = ({
         />
       )}
       {isAuthenticated && employee && (
-      <Redirect
-        to={
-                AUTH_ROUTES.includes(location.pathname)
-                  ? '/employee'
-                  : '/employee'
-              }
-      />
+        <Redirect
+          to={
+            AUTH_ROUTES.includes(location.pathname) ? '/employee' : '/employee'
+          }
+        />
       )}
     </Fragment>,
     <div key="app" id="app-wrapper">
@@ -94,7 +88,7 @@ Layout.propTypes = {
   getUserFromApi: PropTypes.func,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  refreshToken: PropTypes.func,
+  refToken: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -105,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
   getUserFromApi: () => {
     dispatch(getUser());
   },
-  refreshToken: () => {
+  refToken: () => {
     dispatch(refreshToken());
   },
 });

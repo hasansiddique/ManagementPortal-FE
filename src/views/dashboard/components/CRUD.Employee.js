@@ -96,10 +96,12 @@ const CRUDEmployee = ({
     Designation: row.designation,
     joinDate: <Moment format="YYYY-MM-DD HH:mm">{row.joinDate}</Moment>,
     Sr: index,
+    // eslint-disable-next-line no-underscore-dangle
     Id: row._id,
   })) : []);
 
-  data = data.filter((item) => (radioBtn ? item.Department.includes(radioBtn) : item.Name.toLowerCase().includes(search.words.toLowerCase())));
+  data = data.filter((item) => (radioBtn ? item.Department.includes(radioBtn)
+    : item.Name.toLowerCase().includes(search.words.toLowerCase())));
 
   const empLength = !loading && employeeState ? employeeState.length : 0;
   const [form] = Form.useForm();
@@ -107,8 +109,10 @@ const CRUDEmployee = ({
     validateFields, resetFields, setFieldsValue, scrollToField,
   } = form;
 
-  // here i will add setTimeOut bcz it give console warning cannot update state during another state transition so this function will run after 50 milliSeconds
-  // that's why i add this so that first modal state will change after that these values are render on update form
+  // here i will add setTimeOut bcz it give console warning cannot update state
+  // during another state transition so this function will run after 50 milliSeconds
+  // that's why i add this so that first modal state will change after that these
+  // values are render on update form
 
   setTimeout(() => {
     if (id && singleEmployeeState && singleEmployeeState.employee) {
@@ -126,7 +130,7 @@ const CRUDEmployee = ({
     }
   }, 50);
 
-  const showDeleteConfirm = (id) => {
+  const showDeleteConfirm = (itemId) => {
     confirm({
       title: 'Are you sure delete this employee?',
       icon: <ExclamationCircleOutlined />,
@@ -135,9 +139,13 @@ const CRUDEmployee = ({
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        handleDeletion(id);
+        handleDeletion(itemId);
       },
     });
+  };
+
+  const onFinish = (values) => {
+    handleSubmit(values, imgData);
   };
 
   const handleOkForRegistration = () => {
@@ -153,19 +161,12 @@ const CRUDEmployee = ({
           setImgPreview(null);
           setConfirmLoading(false);
         }, 1000);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
   const handleCancelForRegistration = () => {
     setImgPreview(null);
     setVisible(false);
-  };
-
-  const onFinish = (values) => {
-    handleSubmit(values, imgData);
   };
 
   const updateEmployee = (values) => {
@@ -186,9 +187,6 @@ const CRUDEmployee = ({
           setImgPreview(null);
           setConfirmLoading(false);
         }, 1000);
-      })
-      .catch((err) => {
-        console.log(err);
       });
     setVisibleUpdate(false);
   };
@@ -245,6 +243,7 @@ const CRUDEmployee = ({
       dataIndex: 'Name',
       key: 'Name',
       render: (text, record) => (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <p
           onClick={() => {
             showModalForViewEmployee();
@@ -308,9 +307,9 @@ const CRUDEmployee = ({
     setRadioBtn('');
   };
 
-  const onChange = (page) => {
+  const onChange = (currentPage) => {
     setPage({
-      current: page,
+      current: currentPage,
     });
   };
 
@@ -360,14 +359,16 @@ const CRUDEmployee = ({
                     Add Employee
                   </Button>
                 ) : null}
+              {/* @Todo (Hanzlah) later fix these below ternary operators for better transition */}
               <Modal
                 getContainer={false}
-                title={visible ? 'Employee Registration Form' : visibleUpdate ? 'Update Employee' : null}
-                visible={visible || (visibleUpdate || null)}
-                onOk={visible ? handleOkForRegistration : handleOkForUpdate || null}
-                okText={visible ? 'Register' : visibleUpdate ? 'Update' : null}
+                title={visible ? 'Employee Registration Form' : 'Update Employee'}
+                visible={visible || visibleUpdate}
+                onOk={visible ? handleOkForRegistration : handleOkForUpdate}
+                okText={visible ? 'Register' : 'Update'}
                 confirmLoading={confirmLoading}
-                onCancel={visible ? handleCancelForRegistration : visibleUpdate ? handleCancelForUpdate : null}
+                onCancel={visible ? handleCancelForRegistration
+                  : handleCancelForUpdate}
                 maskClosable={false}
               >
                 <Row>
@@ -386,7 +387,8 @@ const CRUDEmployee = ({
                 </Row>
 
                 <Form
-                  {...layout}
+                  labelCol={layout.labelCol}
+                  wrapperCol={layout.wrapperCol}
                   form={form}
                   name="nest-messages"
                   onFinish={visible ? onFinish : updateEmployee}
@@ -571,12 +573,12 @@ CRUDEmployee.propTypes = {
   handleDeletion: PropTypes.func.isRequired,
   getSingleEmployee: PropTypes.func.isRequired,
   updateSingleEmployee: PropTypes.func.isRequired,
-  employeeState: PropTypes.any,
-  singleEmployeeState: PropTypes.any,
-  deletion: PropTypes.bool,
-  loading: PropTypes.bool,
-  Success: PropTypes.bool,
-  onUpdate: PropTypes.bool,
+  employeeState: PropTypes.object.isRequired,
+  singleEmployeeState: PropTypes.string.isRequired,
+  deletion: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  Success: PropTypes.bool.isRequired,
+  onUpdate: PropTypes.bool.isRequired,
 };
 
 CRUDEmployee.styles = {};

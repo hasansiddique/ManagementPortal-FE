@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import CryptoJS from 'crypto-js';
+// import CryptoJS from 'crypto-js';
 
 import request from '../../common/request';
 import storage from '../../common/storage';
@@ -9,33 +9,28 @@ import {
   requestUserLogin,
   userLoginSuccess,
   userLoginFailure,
-
   requestUserRegister,
   registerUserSuccess,
   registerUserFailure,
-
   requestUserLogout,
   userLogoutSuccess,
   userLogoutFailure,
-
   requestUserPasswordReset,
   userPasswordResetSuccess,
   userPasswordResetFailure,
-
   requestVerifyUserEmail,
   verifyUserEmailSuccess,
   verifyUserEmailFailure,
-
   requestResendUserVerification,
   resendUserVerificationSuccess,
   resendUserVerificationFailure,
-
   requestUserPasswordUpdate,
   userPasswordUpdateSuccess,
   userPasswordUpdateFailure,
-
-
 } from './auth.actions';
+
+// @Todo (Hanzlah) working on crypto js for data encryption and decryption for security if required
+//  now i commented the following below code for crypto js and uncomment import module from top
 
 export const getUser = () => {
   return async (dispatch) => {
@@ -45,13 +40,16 @@ export const getUser = () => {
       const userId = get(storage.get('user'), 'user.id');
       const res = await request.get(`/v1/users/${userId}`);
       dispatch(userLoginSuccess(res.data || {}));
-      // Encrypt
-      const encryptData = CryptoJS.AES.encrypt(JSON.stringify(res.data), 'secret key 123').toString();
-      console.log('encryptedData', encryptData);
-      // Decrypt
-      const bytes = CryptoJS.AES.decrypt(encryptData, 'secret key 123');
-      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      console.log('decryptedData', decryptedData);
+      // // Encrypt
+      // const encryptData = CryptoJS.AES.encrypt(
+      //   JSON.stringify(res.data),
+      //   'secret key 123',
+      // ).toString();
+      // console.log('encryptedData', encryptData);
+      // // Decrypt
+      // const bytes = CryptoJS.AES.decrypt(encryptData, 'secret key 123');
+      // const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      // console.log('decryptedData', decryptedData);
       return res;
     } catch (err) {
       dispatch(userLoginFailure(err));
@@ -87,7 +85,10 @@ export const loginUser = (payload) => {
       return res;
     } catch (err) {
       dispatch(userLoginFailure(err));
-      if (err.response.status === HTTP_STATUS.UNAUTHORIZED || HTTP_STATUS.NOT_FOUND) {
+      if (
+        err.response.status === HTTP_STATUS.UNAUTHORIZED
+        || HTTP_STATUS.NOT_FOUND
+      ) {
         openNotification({
           type: 'error',
           title: 'User Login',
@@ -125,7 +126,8 @@ export const registerUser = (payload) => {
         openNotification({
           type: 'error',
           title: 'User Login',
-          description: 'Email address already exists, please try different email address.',
+          description:
+            'Email address already exists, please try different email address.',
         });
       }
       return null;
@@ -158,18 +160,27 @@ export const logoutUser = () => {
 export const refreshToken = () => {
   return async () => {
     try {
-      const refreshToken = get(storage.get('user'), 'token.refreshToken');
+      const refToken = get(storage.get('user'), 'token.refreshToken');
       const obj = storage.get('user');
-      const data = { token: refreshToken };
+      const data = { token: refToken };
       const payload = JSON.stringify(data);
       const res = await request.post('/v1/users/token', payload);
-      storage.set('user', Object.assign(obj, { token: { accessToken: res.data.accessToken, refreshToken: obj.token.refreshToken } }));
+      storage.set(
+        'user',
+        Object.assign(obj, {
+          token: {
+            accessToken: res.data.accessToken,
+            refreshToken: obj.token.refreshToken,
+          },
+        }),
+      );
       return res;
     } catch (err) {
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         storage.clear();
       }
     }
+    return null;
   };
 };
 
@@ -228,7 +239,6 @@ export const verifyUserEmail = (token) => {
     return null;
   };
 };
-
 
 export const resendEmailVerification = (data) => {
   return async (dispatch) => {

@@ -36,7 +36,6 @@ export const createEmployee = (payload, file) => {
   formData.append('designation', payload.designation);
   formData.append('department', payload.department);
   formData.append('address', payload.address);
-  console.log('from create employee', ...formData);
   return async (dispatch) => {
     dispatch(requestEmployeeCreation());
 
@@ -188,7 +187,6 @@ export const UpdateSingleEmployee = (id, payload, file) => {
   form.append('designation', payload.designation);
   form.append('department', payload.department);
   form.append('address', payload.address);
-  console.log('form', ...form);
   return async (dispatch) => {
     dispatch(requestUpdateEmployee());
     try {

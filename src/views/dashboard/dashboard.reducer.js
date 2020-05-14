@@ -46,7 +46,7 @@ const defaultState = Map({
   isCreatingSuccess: false,
   isDeleting: '',
   isDeletingSuccess: false,
-  singleEmployee: null,
+  singleEmployee: '',
   isUpdating: '',
   isUpdated: false,
 
