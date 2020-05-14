@@ -8,7 +8,7 @@ const getHeaders = (headers) => {
   const user = storage.get('user');
   const defaultHeaders = {
     Accept: 'application/vnd.cia.v1+json',
-    'Content-Type': 'application/vnd.cia.v1+json' ,
+    'Content-Type': 'application/vnd.cia.v1+json',
   };
 
   if (user && user.token) {

@@ -25,9 +25,9 @@ import {
   resendUserVerificationSuccess,
   resendUserVerificationFailure,
 
-    requestUserPasswordUpdate,
-    userPasswordUpdateSuccess,
-    userPasswordUpdateFailure,
+  requestUserPasswordUpdate,
+  userPasswordUpdateSuccess,
+  userPasswordUpdateFailure,
 } from './auth.actions';
 import {
   FAILURE,
@@ -51,7 +51,7 @@ const defaultState = Map({
   isRegisterSuccess: false,
   isUpdatingAccount: false,
   isUpdatingPassword: false,
-  isUpdatedPassword: false
+  isUpdatedPassword: false,
 
 });
 
@@ -158,18 +158,18 @@ const reducer = createReducer({
   },
   [requestUserPasswordUpdate]: (state) => {
     return state
-        .set('isUpdatingPassword', false)
-        .set('isUpdatedPassword', false)
+      .set('isUpdatingPassword', false)
+      .set('isUpdatedPassword', false);
   },
   [userPasswordUpdateSuccess]: (state) => {
     return state
-        .set('isUpdatingPassword', true)
-        .set('isUpdatedPassword', true)
+      .set('isUpdatingPassword', true)
+      .set('isUpdatedPassword', true);
   },
   [userPasswordUpdateFailure]: (state) => {
     return state
-        .set('isUpdatingPassword', false)
-        .set('isUpdatedPassword', false)
+      .set('isUpdatingPassword', false)
+      .set('isUpdatedPassword', false);
   },
 }, defaultState);
 

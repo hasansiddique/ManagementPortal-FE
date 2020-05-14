@@ -84,7 +84,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "check": "eslint ./src --ext .js"
+    "check": "eslint --fix ./src --ext .js"
   },
   "eslintConfig": {
     "extends": "react-app"

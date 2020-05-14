@@ -25,7 +25,7 @@ const AppRoutes = () => [
     component={Authentication}
     path={AUTH_ROUTES}
     key="authentication"
-  />
+  />,
 ];
 
 export default AppRoutes;

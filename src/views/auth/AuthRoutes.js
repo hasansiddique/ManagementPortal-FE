@@ -24,8 +24,8 @@ const AuthRoutes = ({
   isRegisterSuccess,
   userPasswordReset,
   resendEmailVerification,
-   userPasswordUpdate,
-   isUpdatedPassword,
+  userPasswordUpdate,
+  isUpdatedPassword,
 }) => {
   return ([
     <Route
@@ -110,17 +110,17 @@ const AuthRoutes = ({
       }}
     />,
     <Route
-        key="UpdatePassword"
-        exact
-        path="/user/update-password"
-        render={() => {
-          return (
-              <UpdatePassword
-                  handleSubmit={userPasswordUpdate}
-                  isUpdatedPassword={isUpdatedPassword}
-              />
-          );
-        }}
+      key="UpdatePassword"
+      exact
+      path="/user/update-password"
+      render={() => {
+        return (
+          <UpdatePassword
+            handleSubmit={userPasswordUpdate}
+            isUpdatedPassword={isUpdatedPassword}
+          />
+        );
+      }}
     />,
   ]);
 };

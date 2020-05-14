@@ -30,9 +30,9 @@ import {
   resendUserVerificationSuccess,
   resendUserVerificationFailure,
 
-    requestUserPasswordUpdate,
-    userPasswordUpdateSuccess,
-    userPasswordUpdateFailure,
+  requestUserPasswordUpdate,
+  userPasswordUpdateSuccess,
+  userPasswordUpdateFailure,
 
 
 } from './auth.actions';
@@ -44,12 +44,12 @@ export const getUser = () => {
     try {
       const userId = get(storage.get('user'), 'user.id');
       const res = await request.get(`/v1/users/${userId}`);
-      dispatch(userLoginSuccess(res.data|| {}));
+      dispatch(userLoginSuccess(res.data || {}));
       // Encrypt
       const encryptData = CryptoJS.AES.encrypt(JSON.stringify(res.data), 'secret key 123').toString();
-      console.log('encryptedData', encryptData)
+      console.log('encryptedData', encryptData);
       // Decrypt
-      const bytes  = CryptoJS.AES.decrypt(encryptData, 'secret key 123');
+      const bytes = CryptoJS.AES.decrypt(encryptData, 'secret key 123');
       const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       console.log('decryptedData', decryptedData);
       return res;
@@ -82,7 +82,7 @@ export const loginUser = (payload) => {
       const res = await request.post('/v1/users/login', payload);
 
       dispatch(userLoginSuccess(res.data || {}));
-      storage.set('user', Object.assign({}, res.data));
+      storage.set('user', { ...res.data });
       window.location.reload();
       return res;
     } catch (err) {
@@ -140,7 +140,7 @@ export const logoutUser = () => {
       const refreshToken = get(storage.get('user'), 'token.refreshToken');
       const data = { token: refreshToken };
       const payload = JSON.stringify(data);
-      const res = await request.post(`/v1/users/logout`, payload);
+      const res = await request.post('/v1/users/logout', payload);
       dispatch(userLogoutSuccess());
       storage.clear();
 
@@ -162,8 +162,8 @@ export const refreshToken = () => {
       const obj = storage.get('user');
       const data = { token: refreshToken };
       const payload = JSON.stringify(data);
-      const res = await request.post(`/v1/users/token`, payload);
-      storage.set('user', Object.assign(obj,{token: {accessToken: res.data.accessToken, refreshToken: obj.token.refreshToken}}));
+      const res = await request.post('/v1/users/token', payload);
+      storage.set('user', Object.assign(obj, { token: { accessToken: res.data.accessToken, refreshToken: obj.token.refreshToken } }));
       return res;
     } catch (err) {
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {

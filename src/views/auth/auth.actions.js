@@ -27,5 +27,3 @@ export const verifyUserEmailFailure = createAction();
 export const requestResendUserVerification = createAction();
 export const resendUserVerificationSuccess = createAction((email) => ({ email }));
 export const resendUserVerificationFailure = createAction();
-
-

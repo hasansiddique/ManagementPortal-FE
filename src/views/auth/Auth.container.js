@@ -8,7 +8,7 @@ import {
   verifyUserEmail,
   userPasswordReset,
   resendEmailVerification,
-    userPasswordUpdate,
+  userPasswordUpdate,
 } from './auth.api';
 
 const mapStateToProps = (state) => ({
@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(resendEmailVerification(token));
     },
     userPasswordUpdate: (payload) => {
-      dispatch(userPasswordUpdate(payload))
+      dispatch(userPasswordUpdate(payload));
     },
   });
 };
