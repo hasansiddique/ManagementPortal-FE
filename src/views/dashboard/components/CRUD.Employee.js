@@ -161,6 +161,10 @@ const CRUDEmployee = ({
           setImgPreview(null);
           setConfirmLoading(false);
         }, 1000);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err);
       });
   };
 
@@ -187,6 +191,10 @@ const CRUDEmployee = ({
           setImgPreview(null);
           setConfirmLoading(false);
         }, 1000);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err);
       });
     setVisibleUpdate(false);
   };
@@ -340,6 +348,38 @@ const CRUDEmployee = ({
 
   const onRadioChange = (e) => setRadioBtn(e.target.value);
 
+  const modalState = () => {
+    const register = visible ? 'Employee Registration Form' : null;
+    const update = visibleUpdate ? 'Employee Update Form' : null;
+    const registerOk = visible ? handleOkForRegistration : null;
+    const updateOk = visibleUpdate ? handleOkForUpdate : null;
+    const registerOkText = visible ? 'Register' : null;
+    const updateOkText = visibleUpdate ? 'Update' : null;
+    const registerCancel = visible ? handleCancelForRegistration : null;
+    const updateCancel = visibleUpdate ? handleCancelForUpdate : null;
+    return {
+      register,
+      update,
+      registerOk,
+      updateOk,
+      registerOkText,
+      updateOkText,
+      registerCancel,
+      updateCancel,
+    };
+  };
+
+  const {
+    register,
+    update,
+    registerOk,
+    updateOk,
+    registerOkText,
+    updateOkText,
+    registerCancel,
+    updateCancel,
+  } = modalState();
+
   return (
     <Content style={{ margin: '0 16px' }}>
       <div
@@ -359,16 +399,14 @@ const CRUDEmployee = ({
                     Add Employee
                   </Button>
                 ) : null}
-              {/* @Todo (Hanzlah) later fix these below ternary operators for better transition */}
               <Modal
                 getContainer={false}
-                title={visible ? 'Employee Registration Form' : 'Update Employee'}
+                title={register || update}
                 visible={visible || visibleUpdate}
-                onOk={visible ? handleOkForRegistration : handleOkForUpdate}
-                okText={visible ? 'Register' : 'Update'}
+                onOk={registerOk || updateOk}
+                okText={registerOkText || updateOkText}
                 confirmLoading={confirmLoading}
-                onCancel={visible ? handleCancelForRegistration
-                  : handleCancelForUpdate}
+                onCancel={registerCancel || updateCancel}
                 maskClosable={false}
               >
                 <Row>
