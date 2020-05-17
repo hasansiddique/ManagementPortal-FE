@@ -1,36 +1,12 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import Dashboard from './view/Dashboard.view';
-import {
-  createEmployee, getAllEmployees, deleteEmployee, getSingleEmployee, UpdateSingleEmployee,
-} from './dashboard.api';
+import Dashboard from "./Dashboard.view";
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.getIn(['auth', 'isAuthenticated']),
-  employee: state.getIn(['dashboard', 'employee']),
-  isCreatingSuccess: state.getIn(['dashboard', 'isCreatingSuccess']),
-  loading: state.getIn(['dashboard', 'loading']),
-  isDeletingSuccess: state.getIn(['dashboard', 'isDeletingSuccess']),
-  singleEmployee: state.getIn(['dashboard', 'singleEmployee']),
-  isUpdated: state.getIn(['dashboard', 'isUpdated']),
+  user: state.getIn(["auth", "user"]),
+  isAuthenticated: state.getIn(["auth", "isAuthenticated"]),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  createEmployee: (payload, file) => {
-    dispatch(createEmployee(payload, file));
-  },
-  getAllEmployees: () => {
-    dispatch(getAllEmployees());
-  },
-  deleteEmployee: (id) => {
-    dispatch(deleteEmployee(id));
-  },
-  getSingleEmployee: (id) => {
-    dispatch(getSingleEmployee(id));
-  },
-  updateSingleEmployee: (id, payload, file) => {
-    dispatch(UpdateSingleEmployee(id, payload, file));
-  },
-});
+const mapDispatchToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
