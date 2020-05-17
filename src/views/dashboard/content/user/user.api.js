@@ -14,7 +14,7 @@ export const getEmployeeRecord = () => {
   return async (dispatch) => {
     dispatch(requestEmployeeRecord());
     try {
-      const userId = get(storage.get('user'), 'user.id');
+      const userId = get(storage.get("user"), 'user.id');
       const res = await request.get(`/v1/employee/${userId}/record`);
       dispatch(EmployeeRecordSuccess(res.data || {}));
       return res;
