@@ -85,16 +85,13 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "check": "eslint --fix ./src --ext .js",
-    "check-commit": "eslint ./src --ext .js",
-    "precommit": "lint-staged"
+    "check-commit": "eslint ./src --ext .js"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run check-commit",
+      "pre-push": "npm run check-commit"
     }
-  },
-  "lint-staged": {
-    "*.js": "npm run check-commit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -171,7 +168,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "lint-staged": "^10.2.2",
+    "husky": "^4.2.5",
     "prettier": "2.0.5"
   }
 }
