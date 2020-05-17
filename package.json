@@ -86,6 +86,9 @@
     "test": "node scripts/test.js",
     "check": "eslint --fix ./src --ext .js"
   },
+  "lint-staged": {
+    "*.js": "npm run check"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
