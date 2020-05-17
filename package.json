@@ -85,10 +85,11 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "check": "eslint --fix ./src --ext .js",
+    "check-commit": "eslint ./src --ext .js",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "npm run check"
+    "*.js": "npm run check-commit"
   },
   "eslintConfig": {
     "extends": "react-app"
