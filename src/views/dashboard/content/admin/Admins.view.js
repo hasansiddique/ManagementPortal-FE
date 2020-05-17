@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import { Layout } from "antd";
-import React from "react";
-import { Route } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { Layout } from 'antd';
+import React from 'react';
+import { Route } from 'react-router-dom';
 
-import EmployeesView from "./employees/Employees.view";
+import EmployeesView from './employees/Employees.view';
 
 const { Content } = Layout;
 

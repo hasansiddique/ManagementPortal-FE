@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import Moment from "react-moment";
-import { get } from "lodash";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import Moment from 'react-moment';
+import { get } from 'lodash';
 import {
   DeleteOutlined,
   ExclamationCircleOutlined,
   FormOutlined,
   PlusOutlined,
   UserAddOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 import {
   Button,
   Col,
@@ -25,10 +25,10 @@ import {
   Table,
   Typography,
   Upload,
-} from "antd";
+} from 'antd';
 
-import storage from "../../../../../common/storage";
-import { USER_STATE } from "../../../../../common/constants";
+import storage from '../../../../../common/storage';
+import { USER_STATE } from '../../../../../common/constants';
 
 const { Content } = Layout;
 const { confirm } = Modal;
@@ -46,7 +46,7 @@ const layout = {
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
+  reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 };
 
@@ -67,14 +67,14 @@ const EmployeesView = ({
   const [visibleUpdate, setVisibleUpdate] = useState(false);
   const [visibleView, setVisibleView] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [search, setSearch] = useState({ words: "" });
+  const [search, setSearch] = useState({ words: '' });
   const [page, setPage] = useState({ current: 1 });
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const [imgPreview, setImgPreview] = useState(null);
   const [imgData, setImgData] = useState(null);
-  const [radioBtn, setRadioBtn] = useState("");
+  const [radioBtn, setRadioBtn] = useState('');
 
-  const typeOfId = get(storage.get("user"), "user.typeOfId");
+  const typeOfId = get(storage.get('user'), 'user.typeOfId');
 
   useEffect(() => {
     handleFetching();
@@ -86,30 +86,29 @@ const EmployeesView = ({
     }
   }, [getSingleEmployee, id]);
 
-  let data =
-    !loading && employeeState
-      ? employeeState.employee.map((row, index) => ({
-          Name: row.name.charAt(0).toUpperCase() + row.name.slice(1),
-          Gender: row.gender.charAt(0).toUpperCase() + row.gender.slice(1),
-          Photo: row.photo,
-          Department: row.department,
-          Designation: row.designation,
-          joinDate: <Moment format="YYYY-MM-DD HH:mm">{row.joinDate}</Moment>,
-          Sr: index,
-          // eslint-disable-next-line no-underscore-dangle
-          Id: row._id,
-        }))
-      : [];
+  let data = !loading && employeeState
+    ? employeeState.employee.map((row, index) => ({
+      Name: row.name.charAt(0).toUpperCase() + row.name.slice(1),
+      Gender: row.gender.charAt(0).toUpperCase() + row.gender.slice(1),
+      Photo: row.photo,
+      Department: row.department,
+      Designation: row.designation,
+      joinDate: <Moment format="YYYY-MM-DD HH:mm">{row.joinDate}</Moment>,
+      Sr: index,
+      // eslint-disable-next-line no-underscore-dangle
+      Id: row._id,
+    }))
+    : [];
 
-  data = data.filter((item) =>
-    radioBtn
-      ? item.Department.includes(radioBtn)
-      : item.Name.toLowerCase().includes(search.words.toLowerCase())
-  );
+  data = data.filter((item) => (radioBtn
+    ? item.Department.includes(radioBtn)
+    : item.Name.toLowerCase().includes(search.words.toLowerCase())));
 
   const empLength = !loading && employeeState ? employeeState.length : 0;
   const [form] = Form.useForm();
-  const { validateFields, resetFields, setFieldsValue, scrollToField } = form;
+  const {
+    validateFields, resetFields, setFieldsValue, scrollToField,
+  } = form;
 
   // here i will add setTimeOut bcz it give console warning cannot update state
   // during another state transition so this function will run after 50 milliSeconds
@@ -134,13 +133,13 @@ const EmployeesView = ({
 
   const showDeleteConfirm = (itemId) => {
     confirm({
-      title: "Are you sure delete this user?",
+      title: 'Are you sure delete this user?',
       icon: <ExclamationCircleOutlined />,
       content:
-        "After this operation user will successfully deleted from database",
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
+        'After this operation user will successfully deleted from database',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
       onOk() {
         handleDeletion(itemId);
       },
@@ -239,14 +238,14 @@ const EmployeesView = ({
 
   const columns = [
     {
-      title: "Sr.",
-      dataIndex: "Sr",
-      key: "Sr",
+      title: 'Sr.',
+      dataIndex: 'Sr',
+      key: 'Sr',
     },
     {
-      dataIndex: "Photo",
-      key: "img",
-      width: "50px",
+      dataIndex: 'Photo',
+      key: 'img',
+      width: '50px',
       render: (record) => (
         <img
           alt="test"
@@ -257,9 +256,9 @@ const EmployeesView = ({
       ),
     },
     {
-      title: "Name",
-      dataIndex: "Name",
-      key: "Name",
+      title: 'Name',
+      dataIndex: 'Name',
+      key: 'Name',
       render: (text, record) => (
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <p
@@ -267,39 +266,39 @@ const EmployeesView = ({
             showModalForViewEmployee();
             setId(record.Id);
           }}
-          style={{ cursor: "pointer", color: "blue" }}
+          style={{ cursor: 'pointer', color: 'blue' }}
         >
           {text}
         </p>
       ),
     },
     {
-      title: "Department",
-      dataIndex: "Department",
-      key: "Department",
+      title: 'Department',
+      dataIndex: 'Department',
+      key: 'Department',
     },
     {
-      title: "Designation",
-      dataIndex: "Designation",
-      key: "Designation",
+      title: 'Designation',
+      dataIndex: 'Designation',
+      key: 'Designation',
     },
     {
-      title: "Gender",
-      dataIndex: "Gender",
-      key: "Gender",
+      title: 'Gender',
+      dataIndex: 'Gender',
+      key: 'Gender',
     },
     {
-      title: "JoinDate",
-      dataIndex: "joinDate",
-      key: "JoinDate",
+      title: 'JoinDate',
+      dataIndex: 'joinDate',
+      key: 'JoinDate',
     },
     {
-      title: "Actions",
-      key: "Actions",
+      title: 'Actions',
+      key: 'Actions',
       render: (record) => (
-        <span style={{ paddingLeft: "10px" }}>
+        <span style={{ paddingLeft: '10px' }}>
           <FormOutlined
-            style={{ color: "green" }}
+            style={{ color: 'green' }}
             onClick={() => {
               showModalForUpdate();
               setId(record.Id);
@@ -307,7 +306,7 @@ const EmployeesView = ({
           />
           {typeOfId === USER_STATE.ADMIN_FULL ? (
             <DeleteOutlined
-              style={{ color: "red", paddingLeft: "15px" }}
+              style={{ color: 'red', paddingLeft: '15px' }}
               onClick={() => showDeleteConfirm(record.Id)}
             />
           ) : null}
@@ -324,7 +323,7 @@ const EmployeesView = ({
   };
 
   const handleClick = () => {
-    setRadioBtn("");
+    setRadioBtn('');
   };
 
   const onChange = (currentPage) => {
@@ -340,13 +339,12 @@ const EmployeesView = ({
   const handleChange = ({ fileList }) => {
     const file = fileList.slice(-1);
     const { type, size } = file[0].originFileObj;
-    const isJpgOrPng =
-      type === "image/jpeg" || type === "image/png" || type === "image/jpg";
+    const isJpgOrPng = type === 'image/jpeg' || type === 'image/png' || type === 'image/jpg';
     const isLt2M = size / 1024 / 1024 <= 2;
     if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
+      message.error('You can only upload JPG/PNG file!');
     } else if (!isLt2M) {
-      message.error("Image must be smaller than or equal to 2MB!");
+      message.error('Image must be smaller than or equal to 2MB!');
     } else {
       setImgData(file[0].originFileObj);
       getBase64(file[0].originFileObj, (imageUrl) => setImgPreview(imageUrl));
@@ -362,12 +360,12 @@ const EmployeesView = ({
   const onRadioChange = (e) => setRadioBtn(e.target.value);
 
   const modalState = () => {
-    const register = visible ? "Employee Registration Form" : null;
-    const update = visibleUpdate ? "Employee Update Form" : null;
+    const register = visible ? 'Employee Registration Form' : null;
+    const update = visibleUpdate ? 'Employee Update Form' : null;
     const registerOk = visible ? handleOkForRegistration : null;
     const updateOk = visibleUpdate ? handleOkForUpdate : null;
-    const registerOkText = visible ? "Register" : null;
-    const updateOkText = visibleUpdate ? "Update" : null;
+    const registerOkText = visible ? 'Register' : null;
+    const updateOkText = visibleUpdate ? 'Update' : null;
     const registerCancel = visible ? handleCancelForRegistration : null;
     const updateCancel = visibleUpdate ? handleCancelForUpdate : null;
     return {
@@ -428,7 +426,7 @@ const EmployeesView = ({
                       <img
                         src={imgPreview}
                         alt="avatar"
-                        style={{ width: "100%" }}
+                        style={{ width: '100%' }}
                       />
                     ) : (
                       uploadButton
@@ -461,7 +459,7 @@ const EmployeesView = ({
                   label="Email"
                   rules={[
                     {
-                      type: "email",
+                      type: 'email',
                       required: true,
                     },
                   ]}
@@ -567,20 +565,20 @@ const EmployeesView = ({
                 <br />
                 <Text strong>JoinDate: </Text>
                 <Text>
-                  {singleEmployeeState &&
-                    singleEmployeeState.employee.joinDate.split("T")[0]}
+                  {singleEmployeeState
+                    && singleEmployeeState.employee.joinDate.split('T')[0]}
                 </Text>
                 <br />
                 <Text strong>Department: </Text>
                 <Text>
-                  {singleEmployeeState &&
-                    singleEmployeeState.employee.department}
+                  {singleEmployeeState
+                    && singleEmployeeState.employee.department}
                 </Text>
                 <br />
                 <Text strong>Designation: </Text>
                 <Text>
-                  {singleEmployeeState &&
-                    singleEmployeeState.employee.designation}
+                  {singleEmployeeState
+                    && singleEmployeeState.employee.designation}
                 </Text>
                 <br />
                 <Text strong>Address: </Text>

@@ -1,11 +1,13 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import { Row, Col } from "antd";
-import { merge } from "lodash";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { Row, Col } from 'antd';
+import { merge } from 'lodash';
 
 class SectionHead extends PureComponent {
   render() {
-    const { title, children, imagePath, headStyles, description } = this.props;
+    const {
+      title, children, imagePath, headStyles, description,
+    } = this.props;
     const { styles } = SectionHead;
 
     return (
@@ -32,9 +34,9 @@ class SectionHead extends PureComponent {
 }
 
 SectionHead.defaultProps = {
-  imagePath: "",
+  imagePath: '',
   headStyles: {},
-  description: "",
+  description: '',
 };
 
 SectionHead.propTypes = {
@@ -47,16 +49,16 @@ SectionHead.propTypes = {
 
 SectionHead.styles = {
   sectionHead: {
-    background: "#fff",
-    padding: "16px 32px 0",
-    borderBottom: "1px solid #e8e8e8",
-    height: "165px",
-    overflowX: "hidden",
-    overflowY: "auto",
+    background: '#fff',
+    padding: '16px 32px 0',
+    borderBottom: '1px solid #e8e8e8',
+    height: '165px',
+    overflowX: 'hidden',
+    overflowY: 'auto',
   },
   imageSection: {
-    textAlign: "right",
-    marginTop: "-19px",
+    textAlign: 'right',
+    marginTop: '-19px',
   },
 };
 

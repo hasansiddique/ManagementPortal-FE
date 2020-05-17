@@ -1,6 +1,6 @@
-import request from "../../../../../common/request";
-import { HTTP_STATUS } from "../../../../../common/constants";
-import { openNotification } from "../../../../../components/Notification";
+import request from '../../../../../common/request';
+import { HTTP_STATUS } from '../../../../../common/constants';
+import { openNotification } from '../../../../../components/Notification';
 
 import {
   requestEmployeeCreation,
@@ -18,29 +18,29 @@ import {
   requestUpdateEmployee,
   EmployeeUpdateSuccess,
   EmployeeUpdateFailure,
-} from "./employees.actions";
+} from './employees.actions';
 
 export const createEmployee = (payload, file) => {
   const formData = new FormData();
-  formData.append("file", file);
-  formData.append("name", payload.name);
-  formData.append("email", payload.email);
-  formData.append("age", payload.age);
-  formData.append("gender", payload.gender);
-  formData.append("designation", payload.designation);
-  formData.append("department", payload.department);
-  formData.append("address", payload.address);
+  formData.append('file', file);
+  formData.append('name', payload.name);
+  formData.append('email', payload.email);
+  formData.append('age', payload.age);
+  formData.append('gender', payload.gender);
+  formData.append('designation', payload.designation);
+  formData.append('department', payload.department);
+  formData.append('address', payload.address);
   return async (dispatch) => {
     dispatch(requestEmployeeCreation());
 
     try {
-      const res = await request.post("/v1/employee/create", formData);
+      const res = await request.post('/v1/employee/create', formData);
       dispatch(EmployeeCreationSuccess());
       if (res.status === HTTP_STATUS.CREATED) {
         openNotification({
-          type: "success",
-          title: "Employee Created",
-          description: "Employee Successfully Registered",
+          type: 'success',
+          title: 'Employee Created',
+          description: 'Employee Successfully Registered',
         });
       }
       return res;
@@ -48,15 +48,15 @@ export const createEmployee = (payload, file) => {
       dispatch(EmployeeCreationFailure());
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Invalid Login credentials!",
+          type: 'error',
+          title: 'User Login',
+          description: 'Invalid Login credentials!',
         });
       } else {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Some thing went wrong while making the request",
+          type: 'error',
+          title: 'User Login',
+          description: 'Some thing went wrong while making the request',
         });
       }
       return null;
@@ -68,28 +68,28 @@ export const getAllEmployees = () => {
   return async (dispatch) => {
     dispatch(requestFetchingEmployees());
     try {
-      const res = await request.get("/v1/employee");
+      const res = await request.get('/v1/employee');
       dispatch(EmployeeFetchingSuccess(res.data || {}));
       return res;
     } catch (err) {
       dispatch(EmployeeFetchingFailure(err));
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Invalid Login credentials!",
+          type: 'error',
+          title: 'User Login',
+          description: 'Invalid Login credentials!',
         });
       } else if (err.response.status === HTTP_STATUS.NOT_FOUND) {
         openNotification({
-          type: "error",
-          title: "Not Found",
-          description: "Resource Not Found!",
+          type: 'error',
+          title: 'Not Found',
+          description: 'Resource Not Found!',
         });
       } else {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Some thing went wrong while making the request",
+          type: 'error',
+          title: 'User Login',
+          description: 'Some thing went wrong while making the request',
         });
       }
       return null;
@@ -105,9 +105,9 @@ export const deleteEmployee = (id) => {
       dispatch(EmployeeDeletionSuccess());
       if (res.status === 200) {
         openNotification({
-          type: "success",
-          title: "Employee Deleted",
-          description: "Employee Successfully Deleted",
+          type: 'success',
+          title: 'Employee Deleted',
+          description: 'Employee Successfully Deleted',
         });
       }
       return res;
@@ -115,21 +115,21 @@ export const deleteEmployee = (id) => {
       dispatch(EmployeeDeletionFailure);
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Invalid Login credentials!",
+          type: 'error',
+          title: 'User Login',
+          description: 'Invalid Login credentials!',
         });
       } else if (err.response.status === HTTP_STATUS.NOT_FOUND) {
         openNotification({
-          type: "error",
-          title: "Not Found",
-          description: "Resource Not Found!",
+          type: 'error',
+          title: 'Not Found',
+          description: 'Resource Not Found!',
         });
       } else {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Some thing went wrong while making the request",
+          type: 'error',
+          title: 'User Login',
+          description: 'Some thing went wrong while making the request',
         });
       }
       return null;
@@ -148,21 +148,21 @@ export const getSingleEmployee = (id) => {
       dispatch(SingleEmployeeFailure(err));
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Invalid Login credentials!",
+          type: 'error',
+          title: 'User Login',
+          description: 'Invalid Login credentials!',
         });
       } else if (err.response.status === HTTP_STATUS.NOT_FOUND) {
         openNotification({
-          type: "error",
-          title: "Not Found",
-          description: "Resource Not Found!",
+          type: 'error',
+          title: 'Not Found',
+          description: 'Resource Not Found!',
         });
       } else {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Some thing went wrong while making the request",
+          type: 'error',
+          title: 'User Login',
+          description: 'Some thing went wrong while making the request',
         });
       }
       return null;
@@ -172,14 +172,14 @@ export const getSingleEmployee = (id) => {
 
 export const UpdateSingleEmployee = (id, payload, file) => {
   const form = new FormData();
-  form.append("file", file);
-  form.append("name", payload.name);
-  form.append("email", payload.email);
-  form.append("age", payload.age);
-  form.append("gender", payload.gender);
-  form.append("designation", payload.designation);
-  form.append("department", payload.department);
-  form.append("address", payload.address);
+  form.append('file', file);
+  form.append('name', payload.name);
+  form.append('email', payload.email);
+  form.append('age', payload.age);
+  form.append('gender', payload.gender);
+  form.append('designation', payload.designation);
+  form.append('department', payload.department);
+  form.append('address', payload.address);
   return async (dispatch) => {
     dispatch(requestUpdateEmployee());
     try {
@@ -187,9 +187,9 @@ export const UpdateSingleEmployee = (id, payload, file) => {
       dispatch(EmployeeUpdateSuccess());
       if (res.status === 200) {
         openNotification({
-          type: "success",
-          title: "Employee Updated",
-          description: "Employee Successfully Updated",
+          type: 'success',
+          title: 'Employee Updated',
+          description: 'Employee Successfully Updated',
         });
       }
       return res;
@@ -197,21 +197,21 @@ export const UpdateSingleEmployee = (id, payload, file) => {
       dispatch(EmployeeUpdateFailure());
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Invalid Login credentials!",
+          type: 'error',
+          title: 'User Login',
+          description: 'Invalid Login credentials!',
         });
       } else if (err.response.status === HTTP_STATUS.NOT_FOUND) {
         openNotification({
-          type: "error",
-          title: "Not Found",
-          description: "Resource Not Found!",
+          type: 'error',
+          title: 'Not Found',
+          description: 'Resource Not Found!',
         });
       } else {
         openNotification({
-          type: "error",
-          title: "User Login",
-          description: "Some thing went wrong while making the request",
+          type: 'error',
+          title: 'User Login',
+          description: 'Some thing went wrong while making the request',
         });
       }
       return null;

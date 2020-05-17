@@ -1,7 +1,7 @@
-import React from "react";
-import { Row, Col, Button } from "antd";
+import React from 'react';
+import { Row, Col, Button } from 'antd';
 
-import logo from "../assets/images/not-found.png";
+import logo from '../assets/images/not-found.png';
 
 const NotFound = () => {
   return (
@@ -16,7 +16,7 @@ const NotFound = () => {
           <Button
             type="primary"
             onClick={() => {
-              window.location.href = "/dashboard";
+              window.location.href = '/dashboard';
             }}
           >
             Back to Home
@@ -29,13 +29,13 @@ const NotFound = () => {
 
 NotFound.styles = {
   pageItem: {
-    textAlign: "center",
+    textAlign: 'center',
     padding: 25,
   },
   pageImage: {
     marginTop: 50,
     marginBottom: 25,
-    textAlign: "center",
+    textAlign: 'center',
   },
 };
 

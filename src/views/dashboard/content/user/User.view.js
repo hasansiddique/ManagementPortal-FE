@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { Row, Col, Typography, Spin } from "antd";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import {
+  Row, Col, Typography, Spin,
+} from 'antd';
 
-import TopBar from "../../layout/Topbar";
+import TopBar from '../../layout/Topbar';
 
 const { Text } = Typography;
 
@@ -20,15 +22,15 @@ const Employee = ({
   const time = date.getHours();
   let greeting;
   if (time < 12) {
-    greeting = "Good morning!";
+    greeting = 'Good morning!';
   } else if (time > 12) {
-    greeting = "Good afternoon!";
+    greeting = 'Good afternoon!';
   } else if (time === 13) {
-    greeting = "Go eat lunch!";
+    greeting = 'Go eat lunch!';
   } else if (time === 18) {
-    greeting = "Good evening!";
+    greeting = 'Good evening!';
   } else {
-    greeting = "Good night!";
+    greeting = 'Good night!';
   }
 
   return (
@@ -36,11 +38,11 @@ const Employee = ({
       {isAuthenticated && isFetched ? (
         <div>
           <TopBar />
-          <Text strong style={{ paddingTop: "50px", marginLeft: "100px" }}>
+          <Text strong style={{ paddingTop: '50px', marginLeft: '100px' }}>
             {greeting}
           </Text>
           <Row>
-            <Col style={{ paddingLeft: "50px" }}>
+            <Col style={{ paddingLeft: '50px' }}>
               <img
                 src={`http://localhost:8000/${
                   record && record.record && record.record.photo
@@ -51,7 +53,7 @@ const Employee = ({
               />
             </Col>
           </Row>
-          <Row style={{ marginTop: "15px", marginLeft: "50px" }}>
+          <Row style={{ marginTop: '15px', marginLeft: '50px' }}>
             <Col span={2}>
               <Text strong> Name: </Text>
               <br />
@@ -85,9 +87,9 @@ const Employee = ({
               <Text>{record && record.record && record.record.department}</Text>
               <br />
               <Text>
-                {record &&
-                  record.record &&
-                  record.record.joinDate.split("T")[0]}
+                {record
+                  && record.record
+                  && record.record.joinDate.split('T')[0]}
               </Text>
               <br />
               <Text>{record && record.record && record.record.address}</Text>
@@ -98,7 +100,7 @@ const Employee = ({
         <Spin
           size="large"
           tip="loading..."
-          style={{ marginTop: "100px", marginLeft: "100px" }}
+          style={{ marginTop: '100px', marginLeft: '100px' }}
         />
       )}
     </div>

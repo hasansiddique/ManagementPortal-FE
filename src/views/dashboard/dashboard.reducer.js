@@ -1,7 +1,7 @@
-import { combineReducers } from "redux-immutable";
+import { combineReducers } from 'redux-immutable';
 
-import user from "./content/user/user.reducer";
-import admin from "./content/admin/admin.reducer";
+import user from './content/user/user.reducer';
+import admin from './content/admin/admin.reducer';
 
 const reducers = combineReducers({
   user,

@@ -1,4 +1,4 @@
-import { createAction } from "redux-act";
+import { createAction } from 'redux-act';
 
 export const requestEmployeeCreation = createAction();
 export const EmployeeCreationSuccess = createAction();

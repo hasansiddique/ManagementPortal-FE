@@ -1,32 +1,26 @@
-import { Layout } from "antd";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { Layout } from 'antd';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
-import TopBar from "./layout/Topbar";
-import Sidebar from "./layout/Sidebar";
-import Content from "./content/DashboardContent";
-import { USER_STATE } from "../../common/constants";
+import TopBar from './layout/Topbar';
+import Sidebar from './layout/Sidebar';
+import Content from './content/DashboardContent';
+import { USER_STATE } from '../../common/constants';
 
-const Dashboard = ({ isAuthenticated, location, history, match, user }) => {
+const Dashboard = ({
+  isAuthenticated, location, history, match, user,
+}) => {
   const [collapsed, toggleSideBar] = useState(true);
 
   useEffect(() => {
-    if (
-      isAuthenticated &&
-      user &&
-      user.user &&
-      location &&
-      (location.pathname === "/dashboard" ||
-        location.pathname === "/dashboard/admin")
-    ) {
-      if (
-        user.user.typeOfId === USER_STATE.ADMIN_FULL ||
-        user.user.typeOfId === USER_STATE.ADMIN_PARTIAL
-      ) {
-        history.push("/dashboard/admin/employees");
+    if (isAuthenticated && user && user.user && location
+      && (location.pathname === '/dashboard' || location.pathname === '/dashboard/admin')) {
+      if (user.user.typeOfId === USER_STATE.ADMIN_FULL
+        || user.user.typeOfId === USER_STATE.ADMIN_PARTIAL) {
+        history.push('/dashboard/admin/employees');
       } else if (user.user.typeOfId === USER_STATE.EMPLOYEE) {
-        history.push("/dashboard/employee");
+        history.push('/dashboard/employee');
       }
     }
   });
@@ -42,7 +36,7 @@ const Dashboard = ({ isAuthenticated, location, history, match, user }) => {
           collapsed={collapsed}
           toggleSideBar={() => toggleSideBar(!collapsed)}
         />
-        <Layout style={{ padding: "0 24px 24px" }}>
+        <Layout style={{ padding: '0 24px 24px' }}>
           <Content match={match} location={location} />
         </Layout>
       </Layout>

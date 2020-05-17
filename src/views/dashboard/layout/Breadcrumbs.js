@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { Breadcrumbs as BreadcrumbArea } from "react-breadcrumbs-dynamic";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Breadcrumbs as BreadcrumbArea } from 'react-breadcrumbs-dynamic';
 
 const Item = ({ to, ...props }) => (
   <li>
@@ -21,8 +21,8 @@ function Breadcrumbs() {
         item={Item}
         container="ul"
         finalProps={{ active: true }}
-        duplicateProps={{ to: "href" }}
-        containerProps={{ className: "breadcrumb" }}
+        duplicateProps={{ to: 'href' }}
+        containerProps={{ className: 'breadcrumb' }}
       />
     </div>
   );

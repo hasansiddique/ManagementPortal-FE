@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 
 class Page extends PureComponent {
   render() {
@@ -26,9 +26,9 @@ Page.defaultProps = {
 };
 
 Page.styles = {
-  WebkitBoxSizing: "border-box",
-  boxSizing: "border-box",
-  minHeight: "100%",
+  WebkitBoxSizing: 'border-box',
+  boxSizing: 'border-box',
+  minHeight: '100%',
 };
 
 export default Page;

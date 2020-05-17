@@ -1,17 +1,18 @@
-import React from "react";
-import split from "lodash/split";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { Layout, Menu } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import React from 'react';
+import split from 'lodash/split';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
-import { getSideBarRoutes } from "../dashboard.routes";
+import { getSideBarRoutes } from '../dashboard.routes';
 
 const { Sider } = Layout;
 
-const Sidebar = ({ user, match, location, collapsed, toggleSideBar }) => {
-  const selectedItem =
-    location && location.pathname && split(location.pathname, "/")[1];
+const Sidebar = ({
+  user, match, location, collapsed, toggleSideBar,
+}) => {
+  const selectedItem = location && location.pathname && split(location.pathname, '/')[1];
   const routes = user && user.user && getSideBarRoutes(user.user.typeOfId);
 
   return (
@@ -24,8 +25,8 @@ const Sidebar = ({ user, match, location, collapsed, toggleSideBar }) => {
     >
       <div className="logo" />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={[selectedItem]}>
-        {routes &&
-          routes.map((route) => {
+        {routes
+          && routes.map((route) => {
             return (
               <Menu.Item key={route.item}>
                 <Link to={`${match.url}${route.url}`} href={route.title}>
@@ -56,10 +57,10 @@ Sidebar.styles = {
   sideBarLayout: {
     left: 0,
     zIndex: 10,
-    overflow: "auto",
-    position: "relative",
-    borderRight: "thin solid #181818",
-    boxShadow: "rgba(0, 21, 41, 0.35) 2px 0px 6px",
+    overflow: 'auto',
+    position: 'relative',
+    borderRight: 'thin solid #181818',
+    boxShadow: 'rgba(0, 21, 41, 0.35) 2px 0px 6px',
   },
 };
 

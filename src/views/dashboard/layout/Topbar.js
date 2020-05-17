@@ -1,24 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Avatar, Menu } from "antd";
-import { Link, withRouter } from "react-router-dom";
-import { LogoutOutlined, EditOutlined } from "@ant-design/icons";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Avatar, Menu } from 'antd';
+import { Link, withRouter } from 'react-router-dom';
+import { LogoutOutlined, EditOutlined } from '@ant-design/icons';
 
-import logo from "../../../assets/images/netorc-logo.png";
+import logo from '../../../assets/images/netorc-logo.png';
 
 const { SubMenu } = Menu;
 
 const styles = {
   menuItem: {
-    float: "right",
-    borderLeft: "thin solid #3d505f",
+    float: 'right',
+    borderLeft: 'thin solid #3d505f',
   },
   logoItem: {
-    borderBottom: "none",
+    borderBottom: 'none',
   },
   header: {
-    backgroundColor: "#0c8dea",
-    color: "#fff",
+    backgroundColor: '#0c8dea',
+    color: '#fff',
   },
 };
 
@@ -34,14 +34,15 @@ const TopBar = ({ user }) => {
 
         <SubMenu
           style={styles.menuItem}
-          title={
+          title={(
             <span>
-              <Avatar style={{ color: "#243c4f" }} size="small">
+              <Avatar style={{ color: '#243c4f' }} size="small">
                 {user && user.user.username.charAt(0).toUpperCase()}
-              </Avatar>{" "}
+              </Avatar>
+              {' '}
               {user && user.user.username.toUpperCase()}
             </span>
-          }
+          )}
         >
           <Menu.ItemGroup>
             <Menu.Item key="2">

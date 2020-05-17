@@ -1,6 +1,6 @@
-import { combineReducers } from "redux-immutable";
+import { combineReducers } from 'redux-immutable';
 
-import employees from "./employees/employees.reducer";
+import employees from './employees/employees.reducer';
 
 const reducers = combineReducers({
   employees,

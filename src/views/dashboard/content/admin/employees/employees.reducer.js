@@ -1,5 +1,5 @@
-import { Map } from "immutable";
-import { createReducer } from "redux-act";
+import { Map } from 'immutable';
+import { createReducer } from 'redux-act';
 
 import {
   requestEmployeeCreation,
@@ -17,7 +17,7 @@ import {
   requestUpdateEmployee,
   EmployeeUpdateSuccess,
   EmployeeUpdateFailure,
-} from "./employees.actions";
+} from './employees.actions';
 
 import {
   CREATING,
@@ -29,99 +29,99 @@ import {
   DELETING,
   UPDATING,
   UPDATED,
-} from "../../../../../common/constants";
+} from '../../../../../common/constants';
 
 const defaultState = Map({
   employee: [],
   loading: true,
   error: null,
-  isFetching: "",
+  isFetching: '',
   isFetched: false,
-  isCreating: "",
+  isCreating: '',
   isCreatingSuccess: false,
-  isDeleting: "",
+  isDeleting: '',
   isDeletingSuccess: false,
-  singleEmployee: "",
-  isUpdating: "",
+  singleEmployee: '',
+  isUpdating: '',
   isUpdated: false,
 });
 
 const reducer = createReducer(
   {
     [requestEmployeeCreation]: (state) => {
-      return state.set("isCreating", CREATING).set("isCreatingSuccess", false);
+      return state.set('isCreating', CREATING).set('isCreatingSuccess', false);
     },
     [EmployeeCreationSuccess]: (state) => {
-      return state.set("isCreating", CREATED).set("isCreatingSuccess", true);
+      return state.set('isCreating', CREATED).set('isCreatingSuccess', true);
     },
     [EmployeeCreationFailure]: (state) => {
-      return state.set("isCreating", FAILURE).set("isCreatingSuccess", false);
+      return state.set('isCreating', FAILURE).set('isCreatingSuccess', false);
     },
     [requestFetchingEmployees]: (state) => {
       return state
-        .set("isFetching", FETCHING)
-        .set("loading", true)
-        .set("employee", [])
-        .set("error", null)
-        .set("isFetched", false);
+        .set('isFetching', FETCHING)
+        .set('loading', true)
+        .set('employee', [])
+        .set('error', null)
+        .set('isFetched', false);
     },
     [EmployeeFetchingSuccess]: (state, action) => {
       return state
-        .set("isFetching", FETCHED)
-        .set("loading", false)
-        .set("employee", action.employee)
-        .set("error", null)
-        .set("isFetched", true);
+        .set('isFetching', FETCHED)
+        .set('loading', false)
+        .set('employee', action.employee)
+        .set('error', null)
+        .set('isFetched', true);
     },
     [EmployeeFetchingFailure]: (state, action) => {
       return state
-        .set("isFetching", FAILURE)
-        .set("loading", false)
-        .set("employee", [])
-        .set("error", action.err)
-        .set("isFetched", false);
+        .set('isFetching', FAILURE)
+        .set('loading', false)
+        .set('employee', [])
+        .set('error', action.err)
+        .set('isFetched', false);
     },
     [requestEmployeeDeletion]: (state) => {
-      return state.set("isDeleting", DELETING).set("isDeletingSuccess", false);
+      return state.set('isDeleting', DELETING).set('isDeletingSuccess', false);
     },
     [EmployeeDeletionSuccess]: (state) => {
-      return state.set("isDeleting", DELETED).set("isDeletingSuccess", true);
+      return state.set('isDeleting', DELETED).set('isDeletingSuccess', true);
     },
     [EmployeeDeletionFailure]: (state) => {
-      return state.set("isDeleting", FAILURE).set("isDeletingSuccess", false);
+      return state.set('isDeleting', FAILURE).set('isDeletingSuccess', false);
     },
     [requestSingleEmployee]: (state) => {
       return state
-        .set("isFetching", FETCHING)
-        .set("singleEmployee", null)
-        .set("error", null);
+        .set('isFetching', FETCHING)
+        .set('singleEmployee', null)
+        .set('error', null);
     },
     [SingleEmployeeSuccess]: (state, action) => {
       return state
-        .set("isFetching", FETCHED)
-        .set("singleEmployee", action.employee)
-        .set("error", null);
+        .set('isFetching', FETCHED)
+        .set('singleEmployee', action.employee)
+        .set('error', null);
     },
     [SingleEmployeeFailure]: (state, action) => {
       return state
-        .set("isFetching", FAILURE)
-        .set("singleEmployee", null)
-        .set("error", action.err);
+        .set('isFetching', FAILURE)
+        .set('singleEmployee', null)
+        .set('error', action.err);
     },
     [requestUpdateEmployee]: (state) => {
-      return state.set("isUpdating", UPDATING).set("isUpdated", false);
+      return state.set('isUpdating', UPDATING).set('isUpdated', false);
     },
     [EmployeeUpdateSuccess]: (state) => {
       return state
-        .set("isUpdating", UPDATED)
-        .set("isUpdated", true)
-        .set("singleEmployee", null);
+        .set('isUpdating', UPDATED)
+        .set('isUpdated', true)
+        .set('singleEmployee', null);
     },
     [EmployeeUpdateFailure]: (state) => {
-      return state.set("isUpdating", FAILURE).set("isUpdated", false);
+      return state.set('isUpdating', FAILURE).set('isUpdated', false);
     },
   },
-  defaultState
+  defaultState,
 );
 
 export default reducer;

@@ -88,6 +88,11 @@
     "check-commit": "eslint ./src --ext .js",
     "precommit": "lint-staged"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.js": "npm run check-commit"
   },
