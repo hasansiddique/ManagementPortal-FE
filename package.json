@@ -89,11 +89,6 @@
   "lint-staged": {
     "*.js": "npm run check"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "eslintConfig": {
     "extends": "react-app"
   },
