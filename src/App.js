@@ -7,7 +7,7 @@ import { BreadcrumbsProvider } from 'react-breadcrumbs-dynamic';
 import './assets/styles/app.scss';
 
 import configureStore from './state/configureStore';
-import Layout from './views/layout/Layout.view';
+import Root from './Root';
 
 export const store = configureStore();
 
@@ -15,7 +15,7 @@ const App = () => (
   <Provider store={store}>
     <Router history={createBrowserHistory()}>
       <BreadcrumbsProvider>
-        <Layout />
+        <Root />
       </BreadcrumbsProvider>
     </Router>
   </Provider>

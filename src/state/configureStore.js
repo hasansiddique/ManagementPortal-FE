@@ -5,6 +5,8 @@ import thunk from 'redux-thunk';
 import reducers from './rootReducer';
 
 const logger = createLogger();
+
+
 const configureStore = (predefinedState) => {
   return createStore(
     reducers,

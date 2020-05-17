@@ -8,6 +8,7 @@ import {
   verifyUserEmail,
   userPasswordReset,
   resendEmailVerification,
+  userPasswordUpdate,
 } from './auth.api';
 
 const mapStateToProps = (state) => ({
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => ({
   isEmailVerified: state.getIn(['auth', 'isEmailVerified']),
   requestingLogin: state.getIn(['auth', 'requestingLogin']),
   isRegisterSuccess: state.getIn(['auth', 'isRegisterSuccess']),
+  isUpdatedPassword: state.getIn(['auth', 'isUpdatedPassword']),
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -41,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resendEmailVerification: (token) => {
       dispatch(resendEmailVerification(token));
+    },
+    userPasswordUpdate: (payload) => {
+      dispatch(userPasswordUpdate(payload));
     },
   });
 };

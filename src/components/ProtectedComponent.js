@@ -9,15 +9,17 @@ const ProtectedComponent = ({
   exact,
   Component,
   isAuthenticated,
+  ...props
 }) => (
   <Route
     path={path}
     exact={exact}
-    render={() => (
-      (isAuthenticated || storage.get('user') !== undefined)
-        ? <Component />
-        : <Redirect to="/user/login" />
-    )}
+    render={() => (isAuthenticated || storage.get('user') !== undefined ? (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+      <Component {...props} />
+    ) : (
+      <Redirect to="/user/login" />
+    ))}
   />
 );
 
@@ -30,7 +32,7 @@ ProtectedComponent.defaultProps = {
 ProtectedComponent.propTypes = {
   Component: PropTypes.any.isRequired,
   isAuthenticated: PropTypes.bool,
-  path: PropTypes.array,
+  path: PropTypes.string,
   exact: PropTypes.bool,
 };
 

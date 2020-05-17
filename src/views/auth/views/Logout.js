@@ -10,7 +10,7 @@ const LogOut = ({ logOutUser, isLoggingOut, isLoggedOut }) => {
     if (storage.get('user')) {
       logOutUser();
     }
-  }, []);
+  }, [logOutUser]);
 
   return (
     <>

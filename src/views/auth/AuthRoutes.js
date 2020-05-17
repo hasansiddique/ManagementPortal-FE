@@ -8,6 +8,7 @@ import Register from './views/Register';
 import ResendEmail from './views/ResendEmail';
 import ForgotPassword from './views/ForgotPassword';
 import EmailVerification from './views/EmailVerification';
+import UpdatePassword from './views/UpdatePassword';
 
 const AuthRoutes = ({
   match,
@@ -23,6 +24,8 @@ const AuthRoutes = ({
   isRegisterSuccess,
   userPasswordReset,
   resendEmailVerification,
+  userPasswordUpdate,
+  isUpdatedPassword,
 }) => {
   return ([
     <Route
@@ -106,6 +109,19 @@ const AuthRoutes = ({
         );
       }}
     />,
+    <Route
+      key="UpdatePassword"
+      exact
+      path="/user/update-password"
+      render={() => {
+        return (
+          <UpdatePassword
+            handleSubmit={userPasswordUpdate}
+            isUpdatedPassword={isUpdatedPassword}
+          />
+        );
+      }}
+    />,
   ]);
 };
 
@@ -118,6 +134,7 @@ AuthRoutes.propTypes = {
   isLoggingOut: PropTypes.bool.isRequired,
   registerUser: PropTypes.func.isRequired,
   isRegistering: PropTypes.bool.isRequired,
+  isUpdatedPassword: PropTypes.bool,
   isEmailVerified: PropTypes.string.isRequired,
   verifyUserEmail: PropTypes.func.isRequired,
   isRegisterSuccess: PropTypes.bool.isRequired,

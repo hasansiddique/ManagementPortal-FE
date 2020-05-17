@@ -17,7 +17,7 @@ const EmailVerification = ({ match, verifyUserEmail, isEmailVerified }) => {
     if (match && match.params && match.params.token) {
       verifyUserEmail(match.params.token);
     }
-  }, []);
+  }, [match, verifyUserEmail]);
 
   return (
     <>

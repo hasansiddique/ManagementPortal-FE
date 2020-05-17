@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs as BreadcrumbArea } from 'react-breadcrumbs-dynamic';
 
-const Item = ({ to, ...props }) => <li><Link to={to}>{props.children}</Link></li>;
+const Item = ({ to, ...props }) => (
+  <li>
+    <Link to={to}>{props.children}</Link>
+  </li>
+);
 
 Item.propTypes = {
   to: PropTypes.string.isRequired,

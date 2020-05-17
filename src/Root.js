@@ -1,17 +1,21 @@
 import { get } from 'lodash';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import React, { Fragment, useEffect } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 
-import AppRoutes from '../../AppRoutes';
-import { getUser } from '../auth/auth.api';
-import storage from '../../common/storage';
-import { AUTH_ROUTES } from '../../common/constants';
+import AppRoutes from './app.routes';
+import storage from './common/storage';
+import { AUTH_ROUTES } from './common/constants';
+import AppLoad from './components/appLoad/AppLoad';
+import { getUser, refreshToken } from './views/auth/auth.api';
 
-const Layout = ({
+const Root = ({
   history,
   location,
+  refToken,
+  isLoggingIn,
   getUserFromApi,
   isAuthenticated,
 }) => {
@@ -25,7 +29,21 @@ const Layout = ({
     } else if (!isAuthenticated && get(storage.get('user'), 'token')) {
       getUserFromApi();
     }
-  }, []);
+  }, [getUserFromApi, isAuthenticated, history]);
+
+  // it will automatically sends refresh token if access token is not valid
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        refToken();
+        window.location.reload();
+      }
+      return Promise.reject(error);
+    },
+  );
 
   return [
     <Fragment key="redirect">
@@ -40,30 +58,35 @@ const Layout = ({
       )}
     </Fragment>,
     <div key="app" id="app-wrapper">
-      <AppRoutes />
+      {isLoggingIn ? <AppLoad /> : <AppRoutes />}
     </div>,
   ];
 };
 
-Layout.defaultProps = {
+Root.defaultProps = {
   isAuthenticated: false,
 };
 
-Layout.propTypes = {
+Root.propTypes = {
   isAuthenticated: PropTypes.bool,
-  getUser: PropTypes.func,
+  getUserFromApi: PropTypes.func,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  refToken: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.getIn(['auth', 'isAuthenticated']),
+  isLoggingIn: state.getIn(['auth', 'isLoggingIn']),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getUserFromApi: () => {
     dispatch(getUser());
   },
+  refToken: () => {
+    dispatch(refreshToken());
+  },
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Root));
