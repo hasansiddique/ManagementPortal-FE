@@ -51,17 +51,17 @@ const getBase64 = (img, callback) => {
 };
 
 const EmployeesView = ({
-  handleSubmit,
-  handleFetching,
-  employeeState,
+  createEmployee,
+  getAllEmployees,
+  employee,
   loading,
-  Success,
-  handleDeletion,
-  deletion,
+  isCreatingSuccess,
+  deleteEmployee,
+  isDeletingSuccess,
   getSingleEmployee,
-  singleEmployeeState,
+  singleEmployee,
   updateSingleEmployee,
-  onUpdate,
+  isUpdated,
 }) => {
   const [visible, setVisible] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
@@ -77,8 +77,8 @@ const EmployeesView = ({
   const typeOfId = get(storage.get('user'), 'user.typeOfId');
 
   useEffect(() => {
-    handleFetching();
-  }, [handleFetching, Success, deletion, onUpdate]);
+    getAllEmployees();
+  }, [getAllEmployees, isCreatingSuccess, isDeletingSuccess, isUpdated]);
 
   useEffect(() => {
     if (id) {
@@ -86,8 +86,8 @@ const EmployeesView = ({
     }
   }, [getSingleEmployee, id]);
 
-  let data = !loading && employeeState
-    ? employeeState.employee.map((row, index) => ({
+  let data = !loading && employee
+    ? employee.employee.map((row, index) => ({
       Name: row.name.charAt(0).toUpperCase() + row.name.slice(1),
       Gender: row.gender.charAt(0).toUpperCase() + row.gender.slice(1),
       Photo: row.photo,
@@ -104,7 +104,7 @@ const EmployeesView = ({
     ? item.Department.includes(radioBtn)
     : item.Name.toLowerCase().includes(search.words.toLowerCase())));
 
-  const empLength = !loading && employeeState ? employeeState.length : 0;
+  const empLength = !loading && employee ? employee.length : 0;
   const [form] = Form.useForm();
   const {
     validateFields, resetFields, setFieldsValue, scrollToField,
@@ -116,15 +116,15 @@ const EmployeesView = ({
   // values are render on update form
 
   setTimeout(() => {
-    if (id && singleEmployeeState && singleEmployeeState.employee) {
+    if (id && singleEmployee && singleEmployee.employee) {
       setFieldsValue({
-        name: singleEmployeeState.employee.name,
-        email: singleEmployeeState.employee.email,
-        gender: singleEmployeeState.employee.gender,
-        age: singleEmployeeState.employee.age,
-        designation: singleEmployeeState.employee.designation,
-        department: singleEmployeeState.employee.department,
-        address: singleEmployeeState.employee.address,
+        name: singleEmployee.employee.name,
+        email: singleEmployee.employee.email,
+        gender: singleEmployee.employee.gender,
+        age: singleEmployee.employee.age,
+        designation: singleEmployee.employee.designation,
+        department: singleEmployee.employee.department,
+        address: singleEmployee.employee.address,
       });
     } else {
       resetFields();
@@ -141,13 +141,13 @@ const EmployeesView = ({
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        handleDeletion(itemId);
+        deleteEmployee(itemId);
       },
     });
   };
 
   const onFinish = (values) => {
-    handleSubmit(values, imgData);
+    createEmployee(values, imgData);
   };
 
   const handleOkForRegistration = () => {
@@ -539,51 +539,51 @@ const EmployeesView = ({
             onCancel={handleCancelForViewEmployee}
             footer={null}
           >
-            {!singleEmployeeState ? (
+            {!singleEmployee ? (
               <Spin tip="Loading..." />
             ) : (
               <div>
                 <Text strong>Name: </Text>
                 <Text>
-                  {singleEmployeeState && singleEmployeeState.employee.name}
+                  {singleEmployee && singleEmployee.employee.name}
                 </Text>
                 <br />
                 <Text strong>Age: </Text>
                 <Text>
-                  {singleEmployeeState && singleEmployeeState.employee.age}
+                  {singleEmployee && singleEmployee.employee.age}
                 </Text>
                 <br />
                 <Text strong>Gender: </Text>
                 <Text>
-                  {singleEmployeeState && singleEmployeeState.employee.gender}
+                  {singleEmployee && singleEmployee.employee.gender}
                 </Text>
                 <br />
                 <Text strong>Email: </Text>
                 <Text>
-                  {singleEmployeeState && singleEmployeeState.employee.email}
+                  {singleEmployee && singleEmployee.employee.email}
                 </Text>
                 <br />
                 <Text strong>JoinDate: </Text>
                 <Text>
-                  {singleEmployeeState
-                    && singleEmployeeState.employee.joinDate.split('T')[0]}
+                  {singleEmployee
+                    && singleEmployee.employee.joinDate.split('T')[0]}
                 </Text>
                 <br />
                 <Text strong>Department: </Text>
                 <Text>
-                  {singleEmployeeState
-                    && singleEmployeeState.employee.department}
+                  {singleEmployee
+                    && singleEmployee.employee.department}
                 </Text>
                 <br />
                 <Text strong>Designation: </Text>
                 <Text>
-                  {singleEmployeeState
-                    && singleEmployeeState.employee.designation}
+                  {singleEmployee
+                    && singleEmployee.employee.designation}
                 </Text>
                 <br />
                 <Text strong>Address: </Text>
                 <Text>
-                  {singleEmployeeState && singleEmployeeState.employee.address}
+                  {singleEmployee && singleEmployee.employee.address}
                 </Text>
               </div>
             )}
@@ -634,17 +634,17 @@ const EmployeesView = ({
 EmployeesView.defaultProps = {};
 
 EmployeesView.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleFetching: PropTypes.func.isRequired,
-  handleDeletion: PropTypes.func.isRequired,
+  createEmployee: PropTypes.func.isRequired,
+  getAllEmployees: PropTypes.func.isRequired,
+  deleteEmployee: PropTypes.func.isRequired,
   getSingleEmployee: PropTypes.func.isRequired,
   updateSingleEmployee: PropTypes.func.isRequired,
-  employeeState: PropTypes.object.isRequired,
-  singleEmployeeState: PropTypes.string.isRequired,
-  deletion: PropTypes.bool.isRequired,
+  employee: PropTypes.object.isRequired,
+  singleEmployee: PropTypes.string.isRequired,
+  isDeletingSuccess: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  Success: PropTypes.bool.isRequired,
-  onUpdate: PropTypes.bool.isRequired,
+  isCreatingSuccess: PropTypes.bool.isRequired,
+  isUpdated: PropTypes.bool.isRequired,
 };
 
 EmployeesView.styles = {};

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Admins from '../Admins.view';
+import Employees from './Employees.view';
 import {
   createEmployee,
   getAllEmployees,
@@ -52,4 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Admins);
+export default connect(mapStateToProps, mapDispatchToProps)(Employees);

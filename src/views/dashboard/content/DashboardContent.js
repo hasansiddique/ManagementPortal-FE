@@ -2,7 +2,7 @@ import React from 'react';
 import { Breadcrumb, Layout } from 'antd';
 import PropTypes from 'prop-types';
 
-import Admins from './admin/employees/Employees.container';
+import Admins from './admin/Admins.container';
 import Employees from './user/User.container';
 import ProtectedComponent from '../../../components/ProtectedComponent';
 
