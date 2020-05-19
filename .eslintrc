@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -36,10 +36,6 @@
     "react/forbid-prop-types": "off",
     "react/no-access-state-in-setstate": "off",
     "import/prefer-default-export": "off",
-    "no-restricted-syntax": [
-      "error",
-      "LabeledStatement",
-      "WithStatement"
-    ]
+    "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"]
   }
 }
