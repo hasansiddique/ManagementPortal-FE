@@ -20,7 +20,7 @@ import {
 } from './employees.actions';
 
 import {
-  CREATING,
+  PENDING,
   CREATED,
   FAILURE,
   FETCHING,
@@ -32,93 +32,81 @@ import {
 } from '../../../../../common/constants';
 
 const defaultState = Map({
-  employee: [],
+  employees: [],
+  employee: null,
+  statusUpdate: '',
   loading: true,
   error: null,
-  isFetching: '',
-  isFetched: false,
-  isCreating: '',
-  isCreatingSuccess: false,
-  isDeleting: '',
-  isDeletingSuccess: false,
-  singleEmployee: '',
-  isUpdating: '',
-  isUpdated: false,
 });
 
 const reducer = createReducer(
   {
     [requestEmployeeCreation]: (state) => {
-      return state.set('isCreating', CREATING).set('isCreatingSuccess', false);
+      return state.set('statusUpdate', PENDING);
     },
     [EmployeeCreationSuccess]: (state) => {
-      return state.set('isCreating', CREATED).set('isCreatingSuccess', true);
+      return state.set('statusUpdate', CREATED);
     },
     [EmployeeCreationFailure]: (state) => {
-      return state.set('isCreating', FAILURE).set('isCreatingSuccess', false);
+      return state.set('statusUpdate', FAILURE);
     },
     [requestFetchingEmployees]: (state) => {
       return state
-        .set('isFetching', FETCHING)
+        .set('statusUpdate', FETCHING)
         .set('loading', true)
-        .set('employee', [])
-        .set('error', null)
-        .set('isFetched', false);
+        .set('employees', [])
+        .set('error', null);
     },
     [EmployeeFetchingSuccess]: (state, action) => {
       return state
-        .set('isFetching', FETCHED)
+        .set('statusUpdate', FETCHED)
         .set('loading', false)
-        .set('employee', action.employee)
-        .set('error', null)
-        .set('isFetched', true);
+        .set('employees', action.employee)
+        .set('error', null);
     },
     [EmployeeFetchingFailure]: (state, action) => {
       return state
-        .set('isFetching', FAILURE)
+        .set('statusUpdate', FAILURE)
         .set('loading', false)
-        .set('employee', [])
-        .set('error', action.err)
-        .set('isFetched', false);
+        .set('employees', [])
+        .set('error', action.err);
     },
     [requestEmployeeDeletion]: (state) => {
-      return state.set('isDeleting', DELETING).set('isDeletingSuccess', false);
+      return state.set('statusUpdate', DELETING);
     },
     [EmployeeDeletionSuccess]: (state) => {
-      return state.set('isDeleting', DELETED).set('isDeletingSuccess', true);
+      return state.set('statusUpdate', DELETED);
     },
     [EmployeeDeletionFailure]: (state) => {
-      return state.set('isDeleting', FAILURE).set('isDeletingSuccess', false);
+      return state.set('statusUpdate', FAILURE);
     },
     [requestSingleEmployee]: (state) => {
       return state
-        .set('isFetching', FETCHING)
-        .set('singleEmployee', null)
+        .set('statusUpdate', FETCHING)
+        .set('employee', null)
         .set('error', null);
     },
     [SingleEmployeeSuccess]: (state, action) => {
       return state
-        .set('isFetching', FETCHED)
-        .set('singleEmployee', action.employee)
+        .set('statusUpdate', FETCHED)
+        .set('employee', action.employee)
         .set('error', null);
     },
     [SingleEmployeeFailure]: (state, action) => {
       return state
-        .set('isFetching', FAILURE)
-        .set('singleEmployee', null)
+        .set('statusUpdate', FAILURE)
+        .set('employee', null)
         .set('error', action.err);
     },
     [requestUpdateEmployee]: (state) => {
-      return state.set('isUpdating', UPDATING).set('isUpdated', false);
+      return state.set('statusUpdate', UPDATING);
     },
     [EmployeeUpdateSuccess]: (state) => {
       return state
-        .set('isUpdating', UPDATED)
-        .set('isUpdated', true)
-        .set('singleEmployee', null);
+        .set('statusUpdate', UPDATED);
     },
     [EmployeeUpdateFailure]: (state) => {
-      return state.set('isUpdating', FAILURE).set('isUpdated', false);
+      return state.set('statusUpdate', FAILURE);
     },
   },
   defaultState,

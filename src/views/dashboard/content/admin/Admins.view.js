@@ -2,8 +2,9 @@ import { Layout } from 'antd';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import EmployeesView from './employees/Employees.container';
 import ProtectedComponent from '../../../../components/ProtectedComponent';
+import EmployeesView from './employees/Employees.container';
+import EmployeeView from './employees/employeeDetails.view';
 
 const { Content } = Layout;
 
@@ -16,6 +17,12 @@ const Admins = ({
       <ProtectedComponent
         path="/dashboard/admin/employees"
         Component={EmployeesView}
+        match={match}
+        location={location}
+      />
+      <ProtectedComponent
+        path="/dashboard/admin/employee/:id"
+        Component={EmployeeView}
         match={match}
         location={location}
       />

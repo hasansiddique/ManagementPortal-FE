@@ -1,37 +1,19 @@
 import { connect } from 'react-redux';
+import EmployeesView from './Employees.view';
 
-import Employees from './Employees.view';
 import {
   createEmployee,
-  getAllEmployees,
+  employees,
   deleteEmployee,
-  getSingleEmployee,
-  UpdateSingleEmployee,
+  employee,
+  UpdateEmployee,
 } from './employees.api';
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.getIn(['auth', 'isAuthenticated']),
-  employee: state.getIn(['dashboard', 'admin', 'employees', 'employee']),
-  isCreatingSuccess: state.getIn([
-    'dashboard',
-    'admin',
-    'employees',
-    'isCreatingSuccess',
-  ]),
   loading: state.getIn(['dashboard', 'admin', 'employees', 'loading']),
-  isDeletingSuccess: state.getIn([
-    'dashboard',
-    'admin',
-    'employees',
-    'isDeletingSuccess',
-  ]),
-  singleEmployee: state.getIn([
-    'dashboard',
-    'admin',
-    'employees',
-    'singleEmployee',
-  ]),
-  isUpdated: state.getIn(['dashboard', 'admin', 'employees', 'isUpdated']),
+  employees: state.getIn(['dashboard', 'admin', 'employees', 'employees']),
+  statusUpdate: state.getIn(['dashboard', 'admin', 'employees', 'statusUpdate']),
+  employee: state.getIn(['dashboard', 'admin', 'employees', 'employee']),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -39,17 +21,17 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(createEmployee(payload, file));
   },
   getAllEmployees: () => {
-    dispatch(getAllEmployees());
+    dispatch(employees());
   },
   deleteEmployee: (id) => {
     dispatch(deleteEmployee(id));
   },
   getSingleEmployee: (id) => {
-    dispatch(getSingleEmployee(id));
+    dispatch(employee(id));
   },
   updateSingleEmployee: (id, payload, file) => {
-    dispatch(UpdateSingleEmployee(id, payload, file));
+    dispatch(UpdateEmployee(id, payload, file));
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Employees);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeesView);

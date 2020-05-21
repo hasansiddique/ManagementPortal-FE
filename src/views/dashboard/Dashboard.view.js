@@ -11,7 +11,7 @@ import { USER_STATE } from '../../common/constants';
 const Dashboard = ({
   isAuthenticated, location, history, match, user,
 }) => {
-  const [collapsed, toggleSideBar] = useState(true);
+  const [collapsed, toggleSideBar] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated && user && user.user && location
