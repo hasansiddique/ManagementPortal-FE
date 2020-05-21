@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
@@ -10,7 +11,7 @@ const LogOut = ({ logOutUser, isLoggingOut, isLoggedOut }) => {
     if (storage.get('user')) {
       logOutUser();
     }
-  }, [logOutUser]);
+  }, []);
 
   return (
     <>

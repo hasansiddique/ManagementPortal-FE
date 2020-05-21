@@ -26,13 +26,13 @@ const loginReducers = {
     .set('isAuthenticated', false)
     .set('loginStatus', ACTIVE),
   userLoginSuccess: (state, action) => state
-    .set('user', Map(action.payload))
+    .set('user', action.payload)
     .set('loginError', null)
     .set('isAuthenticated', true)
     .set('loginStatus', SUCCESS),
   userLoginFailure: (state, action) => state
     .set('user', null)
-    .set('loginError', Map(action.payload))
+    .set('loginError', action.payload)
     .set('isAuthenticated', false)
     .set('loginStatus', FAILURE),
 };
@@ -45,7 +45,7 @@ const logoutReducers = {
     .set('isAuthenticated', false)
     .set('logoutStatus', SUCCESS),
   userLogoutFailure: (state, action) => state
-    .set('logoutError', Map(action.payload))
+    .set('logoutError', action.payload)
     .set('logoutStatus', FAILURE),
 };
 
@@ -56,7 +56,7 @@ const registerReducers = {
   userRegisterSuccess: (state) => state
     .set('registerStatus', SUCCESS),
   userRegisterFailure: (state, action) => state
-    .set('registerError', Map(action.payload))
+    .set('registerError', action.payload)
     .set('registerStatus', FAILURE),
 };
 
@@ -111,6 +111,8 @@ const authSlice = createSlice({
 });
 
 // Selectors
+
+export const isAuthenticatedSelector = (state) => state.getIn(['auth', 'isAuthenticated']);
 
 export const isLoggingInSelector = (state) => state.getIn(['auth', 'loginStatus']) === ACTIVE;
 
