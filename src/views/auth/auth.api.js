@@ -5,13 +5,14 @@ import request from '../../common/request';
 import storage from '../../common/storage';
 import { HTTP_STATUS } from '../../common/constants';
 import { openNotification } from '../../components/Notification';
+
 import {
   requestUserLogin,
   userLoginSuccess,
   userLoginFailure,
   requestUserRegister,
-  registerUserSuccess,
-  registerUserFailure,
+  userRegisterSuccess,
+  userRegisterFailure,
   requestUserLogout,
   userLogoutSuccess,
   userLogoutFailure,
@@ -27,7 +28,7 @@ import {
   requestUserPasswordUpdate,
   userPasswordUpdateSuccess,
   userPasswordUpdateFailure,
-} from './auth.actions';
+} from './auth.store';
 
 // @Todo (Hanzlah) working on crypto js for data encryption and decryption for security if required
 //  now i commented the following below code for crypto js and uncomment import module from top
@@ -111,10 +112,10 @@ export const registerUser = (payload) => {
 
     try {
       const res = await request.post('/v1/users', payload);
-      dispatch(registerUserSuccess());
+      dispatch(userRegisterSuccess());
       return res;
     } catch (err) {
-      dispatch(registerUserFailure());
+      dispatch(userRegisterFailure());
       if (err.response.status === HTTP_STATUS.BAD_REQUEST) {
         openNotification({
           type: 'error',
@@ -146,9 +147,9 @@ export const logoutUser = () => {
       storage.clear();
 
       return res;
-    } catch (e) {
-      dispatch(userLogoutFailure());
-      if (e.response.status === HTTP_STATUS.BAD_REQUEST) {
+    } catch (err) {
+      dispatch(userLogoutFailure(err));
+      if (err.response.status === HTTP_STATUS.BAD_REQUEST) {
         return null;
       }
     }
