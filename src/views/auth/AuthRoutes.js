@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Login from './views/Login';
@@ -10,22 +11,37 @@ import ForgotPassword from './views/ForgotPassword';
 import EmailVerification from './views/EmailVerification';
 import UpdatePassword from './views/UpdatePassword';
 
+import {
+  isLoggingInSelector,
+  isRegisteringSelector,
+  isRegisterSuccessSelector,
+  isLoggingOutSelector,
+  isLoggedOutSelector,
+  isEmailVerifiedSelector,
+  isUpdatedPasswordSelector,
+} from './auth.store';
+
 const AuthRoutes = ({
   loginUser,
-  logOutUser,
-  isLoggingIn,
-  isLoggedOut,
+  logoutUser,
   registerUser,
-  isLoggingOut,
-  isRegistering,
   verifyUserEmail,
-  isEmailVerified,
-  isRegisterSuccess,
   userPasswordReset,
   resendEmailVerification,
   userPasswordUpdate,
-  isUpdatedPassword,
 }) => {
+  const isLoggingIn = useSelector(isLoggingInSelector);
+
+  const isRegistering = useSelector(isRegisteringSelector);
+  const isRegisterSuccess = useSelector(isRegisterSuccessSelector);
+
+  const isLoggingOut = useSelector(isLoggingOutSelector);
+  const isLoggedOut = useSelector(isLoggedOutSelector);
+
+  const isEmailVerified = useSelector(isEmailVerifiedSelector);
+
+  const isUpdatedPassword = useSelector(isUpdatedPasswordSelector);
+
   return ([
     <Route
       key="login"
@@ -61,7 +77,7 @@ const AuthRoutes = ({
       render={() => {
         return (
           <LogOut
-            logOutUser={logOutUser}
+            logOutUser={logoutUser}
             isLoggingOut={isLoggingOut}
             isLoggedOut={isLoggedOut}
           />
@@ -125,17 +141,11 @@ const AuthRoutes = ({
 
 AuthRoutes.propTypes = {
   loginUser: PropTypes.func.isRequired,
-  logOutUser: PropTypes.func.isRequired,
-  isLoggedOut: PropTypes.bool.isRequired,
-  isLoggingIn: PropTypes.bool.isRequired,
-  isLoggingOut: PropTypes.bool.isRequired,
+  logoutUser: PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
-  isRegistering: PropTypes.bool.isRequired,
-  isUpdatedPassword: PropTypes.bool,
-  isEmailVerified: PropTypes.string.isRequired,
   verifyUserEmail: PropTypes.func.isRequired,
-  isRegisterSuccess: PropTypes.bool.isRequired,
   userPasswordReset: PropTypes.func.isRequired,
+  userPasswordUpdate: PropTypes.func.isRequired,
   resendEmailVerification: PropTypes.func.isRequired,
 };
 

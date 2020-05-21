@@ -4,22 +4,7 @@ import PropTypes from 'prop-types';
 
 import AuthRoutes from './AuthRoutes';
 
-const Authentication = ({
-  loginUser,
-  logoutUser,
-  isLoggingIn,
-  isLoggedOut,
-  registerUser,
-  isLoggingOut,
-  isRegistering,
-  verifyUserEmail,
-  isEmailVerified,
-  isRegisterSuccess,
-  userPasswordReset,
-  resendEmailVerification,
-  isUpdatedPassword,
-  userPasswordUpdate,
-}) => {
+const Authentication = (props) => {
   return (
     <div key="auth-view" id="auth">
       <div className="auth-wrapper">
@@ -32,20 +17,8 @@ const Authentication = ({
           <div className="auth-component">
             <Card>
               <AuthRoutes
-                loginUser={loginUser}
-                logOutUser={logoutUser}
-                isLoggingIn={isLoggingIn}
-                isLoggingOut={isLoggingOut}
-                isLoggedOut={isLoggedOut}
-                registerUser={registerUser}
-                isRegistering={isRegistering}
-                verifyUserEmail={verifyUserEmail}
-                isEmailVerified={isEmailVerified}
-                isRegisterSuccess={isRegisterSuccess}
-                userPasswordReset={userPasswordReset}
-                resendEmailVerification={resendEmailVerification}
-                userPasswordUpdate={userPasswordUpdate}
-                isUpdatedPassword={isUpdatedPassword}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...props}
               />
             </Card>
           </div>
@@ -64,17 +37,10 @@ Authentication.defaultProps = {};
 Authentication.propTypes = {
   loginUser: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  isLoggedOut: PropTypes.bool.isRequired,
-  isLoggingIn: PropTypes.bool.isRequired,
-  isLoggingOut: PropTypes.bool.isRequired,
   registerUser: PropTypes.func.isRequired,
-  isRegistering: PropTypes.bool.isRequired,
-  isEmailVerified: PropTypes.string.isRequired,
   verifyUserEmail: PropTypes.func.isRequired,
-  isRegisterSuccess: PropTypes.bool.isRequired,
   userPasswordReset: PropTypes.func.isRequired,
   resendEmailVerification: PropTypes.func.isRequired,
-  isUpdatedPassword: PropTypes.bool.isRequired,
   userPasswordUpdate: PropTypes.func.isRequired,
 };
 
