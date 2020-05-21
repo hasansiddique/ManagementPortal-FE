@@ -11,7 +11,6 @@ import EmailVerification from './views/EmailVerification';
 import UpdatePassword from './views/UpdatePassword';
 
 const AuthRoutes = ({
-  match,
   loginUser,
   logOutUser,
   isLoggingIn,
@@ -76,7 +75,6 @@ const AuthRoutes = ({
       render={() => {
         return (
           <EmailVerification
-            match={match}
             verifyUserEmail={verifyUserEmail}
             isEmailVerified={isEmailVerified}
           />
@@ -126,7 +124,6 @@ const AuthRoutes = ({
 };
 
 AuthRoutes.propTypes = {
-  match: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   logOutUser: PropTypes.func.isRequired,
   isLoggedOut: PropTypes.bool.isRequired,

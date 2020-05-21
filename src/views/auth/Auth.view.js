@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import AuthRoutes from './AuthRoutes';
 
 const Authentication = ({
-  match,
   loginUser,
   logoutUser,
   isLoggingIn,
@@ -33,7 +32,6 @@ const Authentication = ({
           <div className="auth-component">
             <Card>
               <AuthRoutes
-                match={match}
                 loginUser={loginUser}
                 logOutUser={logoutUser}
                 isLoggingIn={isLoggingIn}
@@ -64,7 +62,6 @@ const Authentication = ({
 Authentication.defaultProps = {};
 
 Authentication.propTypes = {
-  match: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   isLoggedOut: PropTypes.bool.isRequired,
