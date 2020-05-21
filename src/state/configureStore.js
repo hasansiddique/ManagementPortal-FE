@@ -5,11 +5,10 @@ import reducers from './rootReducer';
 
 const logger = createLogger();
 
-const configStore = (preloadedState) =>
-  configureStore({
-    reducer: reducers,
-    middleware: [thunk, logger],
-    preloadedState,
-  });
+const configStore = (preloadedState) => configureStore({
+  reducer: reducers,
+  middleware: [thunk, logger],
+  preloadedState,
+});
 
 export default configStore;

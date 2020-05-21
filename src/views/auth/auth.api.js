@@ -86,8 +86,7 @@ export const loginUser = (payload) => {
     } catch (err) {
       dispatch(userLoginFailure(err));
       if (
-        err.response.status === HTTP_STATUS.UNAUTHORIZED
-        || HTTP_STATUS.NOT_FOUND
+        err.response.status === HTTP_STATUS.UNAUTHORIZED || HTTP_STATUS.NOT_FOUND
       ) {
         openNotification({
           type: 'error',

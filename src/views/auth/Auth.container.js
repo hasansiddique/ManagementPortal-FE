@@ -1,4 +1,7 @@
-import { connect } from 'react-redux';
+/* eslint-disable no-shadow */
+/* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Authentication from './Auth.view';
 import {
@@ -11,43 +14,34 @@ import {
   userPasswordUpdate,
 } from './auth.api';
 
-const mapStateToProps = (state) => ({
-  user: state.getIn(['auth', 'user']),
-  error: state.getIn(['auth', 'error']),
-  isLoggingIn: state.getIn(['auth', 'isLoggingIn']),
-  isLoggedOut: state.getIn(['auth', 'isLoggedOut']),
-  isLoggingOut: state.getIn(['auth', 'isLoggingOut']),
-  isRegistering: state.getIn(['auth', 'isRegistering']),
-  isEmailVerified: state.getIn(['auth', 'isEmailVerified']),
-  requestingLogin: state.getIn(['auth', 'requestingLogin']),
-  isRegisterSuccess: state.getIn(['auth', 'isRegisterSuccess']),
-  isUpdatedPassword: state.getIn(['auth', 'isUpdatedPassword']),
-});
+const authSelector = (state) => state.get('auth');
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    logoutUser: () => {
-      dispatch(logoutUser());
-    },
-    loginUser: (payload) => {
-      dispatch(loginUser((payload)));
-    },
-    registerUser: (payload) => {
-      dispatch(registerUser(payload));
-    },
-    verifyUserEmail: (token) => {
-      dispatch(verifyUserEmail(token));
-    },
-    userPasswordReset: (token) => {
-      dispatch(userPasswordReset(token));
-    },
-    resendEmailVerification: (token) => {
-      dispatch(resendEmailVerification(token));
-    },
-    userPasswordUpdate: (payload) => {
-      dispatch(userPasswordUpdate(payload));
-    },
-  });
+const loginStatusSelector = (state) => state.getIn(['auth', 'isLoggingIn']);
+
+const AuthContainer = () => {
+  const dispatch = useDispatch();
+
+  const auth = useSelector(authSelector);
+  const isLoggingIn = useSelector(loginStatusSelector);
+
+  const props = {
+    logoutUser: () => dispatch(logoutUser()),
+    loginUser: (payload) => dispatch(loginUser(payload)),
+    registerUser: (payload) => dispatch(registerUser(payload)),
+    verifyUserEmail: (token) => dispatch(verifyUserEmail(token)),
+    userPasswordReset: (token) => dispatch(userPasswordReset(token)),
+    resendEmailVerification: (token) => dispatch(resendEmailVerification(token)),
+    userPasswordUpdate: (payload) => dispatch(userPasswordUpdate(payload)),
+  };
+
+  return (
+    <Authentication
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      auth={auth}
+      isLoggingIn={isLoggingIn}
+    />
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Authentication);
+export default AuthContainer;
