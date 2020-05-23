@@ -1,7 +1,7 @@
 /* eslint-disable */ 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Spin } from 'antd';
 
 import storage from '../../../common/storage';
@@ -26,4 +26,4 @@ LogOut.propTypes = {
   isLoggedOut: PropTypes.bool.isRequired,
   isLoggingOut: PropTypes.bool.isRequired,
 };
-export default withRouter(LogOut);
+export default LogOut;

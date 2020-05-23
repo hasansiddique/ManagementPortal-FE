@@ -1,7 +1,6 @@
 import {
   Link,
   Redirect,
-  withRouter,
   useParams,
 } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
@@ -69,4 +68,4 @@ EmailVerification.propTypes = {
   verifyUserEmail: PropTypes.func.isRequired,
   isEmailVerified: PropTypes.string.isRequired,
 };
-export default withRouter(EmailVerification);
+export default EmailVerification;
