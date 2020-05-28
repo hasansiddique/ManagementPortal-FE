@@ -24,6 +24,7 @@ import {
 const initialState = Map({
   user: null,
   authStatus: INACTIVE,
+  isLocalUserFetched: false,
   authError: null,
   isAuthenticated: false,
   isEmailVerified: '',
@@ -45,6 +46,7 @@ const loginReducers = {
     .set('isAuthenticated', false)
     .set('authError', action.payload)
     .set('authStatus', LOGIN_ERROR),
+  fetchedLocalUser: (state) => state.set('isLocalUserFetched', true),
 };
 
 const logoutReducers = {
@@ -143,6 +145,7 @@ export const {
   requestUserPasswordUpdate,
   userPasswordUpdateFailure,
   userPasswordUpdateSuccess,
+  fetchedLocalUser,
 } = authSlice.actions;
 
 export default authSlice.reducer;

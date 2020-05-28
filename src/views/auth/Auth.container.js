@@ -15,8 +15,6 @@ import {
 const AuthContainer = () => {
   const dispatch = useDispatch();
 
-  //  TODO: change status to auth status
-
   const props = {
     authStatus: useSelector((state) => state.getIn(['auth', 'authStatus'])),
     isEmailVerified: useSelector((state) => state.getIn(['auth', 'isEmailVerified'])),

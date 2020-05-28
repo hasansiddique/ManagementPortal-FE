@@ -17,6 +17,7 @@ const Root = () => {
 
   const isLoggingIn = useSelector((state) => state.getIn(['auth', 'authStatus']) === LOGGING_IN);
   const isAuthenticated = useSelector((state) => state.getIn(['auth', 'isAuthenticated']));
+  const isLocalUserFetched = useSelector((state) => state.getIn(['auth', 'isLocalUserFetched']));
 
   const refToken = () => dispatch(refreshToken());
   const getUserFromApi = () => dispatch(getUser());
@@ -26,7 +27,7 @@ const Root = () => {
     if (isAuthenticated && AUTH_ROUTES.includes(location.pathname)) {
       history.push('/dashboard');
     }
-    if (!isAuthenticated && get(storage.get('user'), 'token')) {
+    if (!isAuthenticated && !isLocalUserFetched && get(storage.get('user'), 'token')) {
       getUserFromApi();
     }
   }, [getUserFromApi, isAuthenticated]);
