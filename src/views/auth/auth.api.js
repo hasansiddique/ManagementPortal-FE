@@ -143,8 +143,8 @@ export const logoutUser = () => {
       const data = { token: refreshToken };
       const payload = JSON.stringify(data);
       const res = await request.post('/v1/users/logout', payload);
-      dispatch(userLogoutSuccess());
       storage.clear();
+      dispatch(userLogoutSuccess());
 
       return res;
     } catch (err) {

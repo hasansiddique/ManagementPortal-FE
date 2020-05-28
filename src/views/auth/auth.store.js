@@ -53,7 +53,8 @@ const logoutReducers = {
     .set('authStatus', LOGGING_OUT),
   userLogoutSuccess: (state) => state
     .set('isAuthenticated', false)
-    .set('authStatus', LOGGED_OUT),
+    .set('authStatus', LOGGED_OUT)
+    .set('isAuthenticated', false),
   userLogoutFailure: (state, action) => state
     .set('authError', action.payload)
     .set('authStatus', LOGOUT_ERROR),
