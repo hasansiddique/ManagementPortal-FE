@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Login from './views/Login';
@@ -11,16 +10,6 @@ import ForgotPassword from './views/ForgotPassword';
 import EmailVerification from './views/EmailVerification';
 import UpdatePassword from './views/UpdatePassword';
 
-import {
-  isLoggingInSelector,
-  isRegisteringSelector,
-  isRegisterSuccessSelector,
-  isLoggingOutSelector,
-  isLoggedOutSelector,
-  isEmailVerifiedSelector,
-  isUpdatedPasswordSelector,
-} from './auth.store';
-
 const AuthRoutes = ({
   loginUser,
   logoutUser,
@@ -29,19 +18,14 @@ const AuthRoutes = ({
   userPasswordReset,
   resendEmailVerification,
   userPasswordUpdate,
+  isLoggingIn,
+  isRegistering,
+  isRegisterSuccess,
+  isLoggingOut,
+  isLoggedOut,
+  isEmailVerified,
+  isUpdatedPassword,
 }) => {
-  const isLoggingIn = useSelector(isLoggingInSelector);
-
-  const isRegistering = useSelector(isRegisteringSelector);
-  const isRegisterSuccess = useSelector(isRegisterSuccessSelector);
-
-  const isLoggingOut = useSelector(isLoggingOutSelector);
-  const isLoggedOut = useSelector(isLoggedOutSelector);
-
-  const isEmailVerified = useSelector(isEmailVerifiedSelector);
-
-  const isUpdatedPassword = useSelector(isUpdatedPasswordSelector);
-
   return ([
     <Route
       key="login"
@@ -147,6 +131,13 @@ AuthRoutes.propTypes = {
   userPasswordReset: PropTypes.func.isRequired,
   userPasswordUpdate: PropTypes.func.isRequired,
   resendEmailVerification: PropTypes.func.isRequired,
+  isLoggingIn: PropTypes.bool.isRequired,
+  isRegistering: PropTypes.bool.isRequired,
+  isRegisterSuccess: PropTypes.bool.isRequired,
+  isLoggingOut: PropTypes.bool.isRequired,
+  isLoggedOut: PropTypes.bool.isRequired,
+  isEmailVerified: PropTypes.bool.isRequired,
+  isUpdatedPassword: PropTypes.bool.isRequired,
 };
 
 export default AuthRoutes;

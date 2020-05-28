@@ -110,22 +110,6 @@ const authSlice = createSlice({
   },
 });
 
-// Selectors
-
-export const isAuthenticatedSelector = (state) => state.getIn(['auth', 'isAuthenticated']);
-
-export const isLoggingInSelector = (state) => state.getIn(['auth', 'loginStatus']) === ACTIVE;
-
-export const isRegisteringSelector = (state) => state.getIn(['auth', 'registerStatus']) === ACTIVE;
-export const isRegisterSuccessSelector = (state) => state.getIn(['auth', 'registerStatus']) === SUCCESS;
-
-export const isLoggingOutSelector = (state) => state.getIn(['auth', 'logoutStatus']) === ACTIVE;
-export const isLoggedOutSelector = (state) => state.getIn(['auth', 'logoutStatus']) === SUCCESS;
-
-export const isEmailVerifiedSelector = (state) => state.getIn(['auth', 'isEmailVerified']) === EMAIL_VERIFIED;
-
-export const isUpdatedPasswordSelector = (state) => state.getIn(['auth', 'passwordUpdateStatus']) === SUCCESS;
-
 export const {
   requestUserLogin,
   requestUserLogout,

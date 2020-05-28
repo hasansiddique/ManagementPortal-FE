@@ -42,6 +42,13 @@ Authentication.propTypes = {
   userPasswordReset: PropTypes.func.isRequired,
   resendEmailVerification: PropTypes.func.isRequired,
   userPasswordUpdate: PropTypes.func.isRequired,
+  isLoggingIn: PropTypes.bool.isRequired,
+  isRegistering: PropTypes.bool.isRequired,
+  isRegisterSuccess: PropTypes.bool.isRequired,
+  isLoggingOut: PropTypes.bool.isRequired,
+  isLoggedOut: PropTypes.bool.isRequired,
+  isEmailVerified: PropTypes.bool.isRequired,
+  isUpdatedPassword: PropTypes.bool.isRequired,
 };
 
 Authentication.styles = {

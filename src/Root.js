@@ -6,16 +6,16 @@ import { Redirect, useLocation } from 'react-router-dom';
 
 import AppRoutes from './app.routes';
 import storage from './common/storage';
-import { AUTH_ROUTES } from './common/constants';
+import { AUTH_ROUTES, ACTIVE } from './common/constants';
 import AppLoad from './components/appLoad/AppLoad';
 import { getUser, refreshToken } from './views/auth/auth.api';
-import { isLoggingInSelector, isAuthenticatedSelector } from './views/auth/auth.store';
 
 const Root = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const isLoggingIn = useSelector(isLoggingInSelector);
-  const isAuthenticated = useSelector(isAuthenticatedSelector);
+
+  const isLoggingIn = useSelector((state) => state.getIn(['auth', 'loginStatus']) === ACTIVE);
+  const isAuthenticated = useSelector((state) => state.getIn(['auth', 'isAuthenticated']));
 
   const refToken = () => dispatch(refreshToken());
   const getUserFromApi = () => dispatch(getUser());
