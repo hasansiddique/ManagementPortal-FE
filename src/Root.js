@@ -1,5 +1,4 @@
 import { get } from 'lodash';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -8,7 +7,7 @@ import AppRoutes from './app.routes';
 import storage from './common/storage';
 import { LOGGING_IN, AUTH_ROUTES } from './common/constants';
 import AppLoad from './components/appLoad/AppLoad';
-import { getUser, refreshToken } from './views/auth/auth.api';
+import { getUser } from './views/auth/auth.api';
 
 const Root = () => {
   const location = useLocation();
@@ -19,7 +18,6 @@ const Root = () => {
   const isAuthenticated = useSelector((state) => state.getIn(['auth', 'isAuthenticated']));
   const isLocalUserFetched = useSelector((state) => state.getIn(['auth', 'isLocalUserFetched']));
 
-  const refToken = () => dispatch(refreshToken());
   const getUserFromApi = () => dispatch(getUser());
 
 
@@ -33,20 +31,6 @@ const Root = () => {
   }, [getUserFromApi, isAuthenticated]);
 
   // it will automatically sends refresh token if access token is not valid
-
-  // TODO: Move to request.js
-  axios.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      if (error.response.status === 401) {
-        refToken();
-        window.location.reload();
-      }
-      return Promise.reject(error);
-    },
-  );
 
   return [
     <div key="app" id="app-wrapper">

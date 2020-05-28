@@ -4,6 +4,9 @@ import { merge } from 'lodash';
 import storage from '../storage';
 import transformKeys from '../transformKeys';
 
+import { store, history } from '../../App';
+import { refreshToken } from '../../views/auth/auth.api';
+
 const getHeaders = (headers) => {
   const user = storage.get('user');
   const defaultHeaders = {
@@ -17,6 +20,28 @@ const getHeaders = (headers) => {
 
   return merge({}, defaultHeaders, headers);
 };
+
+axios.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    switch (error.response.status) {
+      case 401:
+        store.dispatch(refreshToken());
+        // history.push('/unauthorized');
+        window.location.reload();
+        break;
+      case 404:
+        history.push('/resource-not-found');
+        break;
+      case 500:
+        history.push('/internal-server-error');
+        break;
+      default:
+        break;
+    }
+    return Promise.reject(error);
+  },
+);
 
 const request = {
   get: (url, headers = {}) => {
