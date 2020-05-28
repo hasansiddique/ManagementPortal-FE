@@ -12,20 +12,14 @@ import {
   userPasswordUpdate,
 } from './auth.api';
 
-import { ACTIVE, SUCCESS, EMAIL_VERIFIED } from '../../common/constants';
-
-
 const AuthContainer = () => {
   const dispatch = useDispatch();
 
+  //  TODO: change status to auth status
+
   const props = {
-    isLoggingIn: useSelector((state) => state.getIn(['auth', 'loginStatus']) === ACTIVE),
-    isRegistering: useSelector((state) => state.getIn(['auth', 'registerStatus']) === ACTIVE),
-    isRegisterSuccess: useSelector((state) => state.getIn(['auth', 'registerStatus']) === SUCCESS),
-    isLoggingOut: useSelector((state) => state.getIn(['auth', 'logoutStatus']) === ACTIVE),
-    isLoggedOut: useSelector((state) => state.getIn(['auth', 'logoutStatus']) === SUCCESS),
-    isEmailVerified: useSelector((state) => state.getIn(['auth', 'isEmailVerified']) === EMAIL_VERIFIED),
-    isUpdatedPassword: useSelector((state) => state.getIn(['auth', 'passwordUpdateStatus']) === SUCCESS),
+    authStatus: useSelector((state) => state.getIn(['auth', 'authStatus'])),
+    isEmailVerified: useSelector((state) => state.getIn(['auth', 'isEmailVerified'])),
     logoutUser: () => dispatch(logoutUser()),
     loginUser: (payload) => dispatch(loginUser(payload)),
     registerUser: (payload) => dispatch(registerUser(payload)),
@@ -34,10 +28,10 @@ const AuthContainer = () => {
     resendEmailVerification: (token) => dispatch(resendEmailVerification(token)),
     userPasswordUpdate: (payload) => dispatch(userPasswordUpdate(payload)),
   };
+  // eslint-disable jsx-props-no-spreading
 
   return (
     <Authentication
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />
   );

@@ -1,63 +1,73 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Map } from 'immutable';
 import {
-  INACTIVE, SUCCESS, FAILURE, ACTIVE, EMAIL_VERIFYING, EMAIL_VERIFIED, EMAIL_VERIFICATION_CONFLICT,
+  INACTIVE,
+  SUCCESS,
+  FAILURE,
+  EMAIL_VERIFYING,
+  EMAIL_VERIFIED,
+  EMAIL_VERIFICATION_CONFLICT,
+  LOGGING_IN,
+  LOGGED_IN,
+  LOGIN_ERROR,
+  LOGGING_OUT,
+  LOGGED_OUT,
+  LOGOUT_ERROR,
+  REGISTERED,
+  REGISTERING,
+  REGISTER_ERROR,
+  UPDATING_PASSWORD,
+  PASSWORD_UPDATED,
+  PASSWORD_UPDATE_ERROR,
 } from '../../common/constants';
 
 const initialState = Map({
   user: null,
-  loginStatus: INACTIVE,
-  loginError: null,
-  logoutStatus: INACTIVE,
-  logoutError: null,
-  registerStatus: INACTIVE,
-  registerError: null,
+  authStatus: INACTIVE,
+  authError: null,
   isAuthenticated: false,
   isEmailVerified: '',
   resetMsg: '',
   isUpdatingAccount: false,
-  passwordUpdateStatus: INACTIVE,
 });
 
 const loginReducers = {
   requestUserLogin: (state) => state
     .set('user', null)
-    .set('loginError', null)
     .set('isAuthenticated', false)
-    .set('loginStatus', ACTIVE),
+    .set('authStatus', LOGGING_IN),
   userLoginSuccess: (state, action) => state
     .set('user', action.payload)
-    .set('loginError', null)
     .set('isAuthenticated', true)
-    .set('loginStatus', SUCCESS),
+    .set('authStatus', LOGGED_IN),
   userLoginFailure: (state, action) => state
     .set('user', null)
-    .set('loginError', action.payload)
     .set('isAuthenticated', false)
-    .set('loginStatus', FAILURE),
+    .set('authError', action.payload)
+    .set('authStatus', LOGIN_ERROR),
 };
 
 const logoutReducers = {
   requestUserLogout: (state) => state
-    .set('logoutError', null)
-    .set('logoutStatus', ACTIVE),
+    .set('authError', null)
+    .set('authStatus', LOGGING_OUT),
   userLogoutSuccess: (state) => state
     .set('isAuthenticated', false)
-    .set('logoutStatus', SUCCESS),
+    .set('authStatus', LOGGED_OUT),
   userLogoutFailure: (state, action) => state
-    .set('logoutError', action.payload)
-    .set('logoutStatus', FAILURE),
+    .set('authError', action.payload)
+    .set('authStatus', LOGOUT_ERROR),
 };
 
 const registerReducers = {
   requestUserRegister: (state) => state
-    .set('registerError', null)
-    .set('registerStatus', ACTIVE),
+    .set('authError', null)
+    .set('authStatus', REGISTERING),
   userRegisterSuccess: (state) => state
-    .set('registerStatus', SUCCESS),
+    .set('authStatus', REGISTERED),
   userRegisterFailure: (state, action) => state
-    .set('registerError', action.payload)
-    .set('registerStatus', FAILURE),
+    .set('authError', action.payload)
+    .set('authStatus', REGISTER_ERROR),
 };
 
 const emailVerficationReducers = {
@@ -89,11 +99,11 @@ const userVerificationReducers = {
 
 const updatePasswordReducers = {
   requestUserPasswordUpdate: (state) => state
-    .set('passwordUpdateStatus', ACTIVE),
+    .set('authStatus', UPDATING_PASSWORD),
   userPasswordUpdateSuccess: (state) => state
-    .set('passwordUpdateStatus', SUCCESS),
+    .set('authStatus', PASSWORD_UPDATED),
   userPasswordUpdateFailure: (state) => state
-    .set('passwordUpdateStatus', FAILURE),
+    .set('authStatus', PASSWORD_UPDATE_ERROR),
 };
 
 const authSlice = createSlice({

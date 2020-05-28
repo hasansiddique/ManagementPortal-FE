@@ -27,6 +27,8 @@ const Root = () => {
   }, [getUserFromApi, isAuthenticated]);
 
   // it will automatically sends refresh token if access token is not valid
+
+  // TODO: Move to request.js
   axios.interceptors.response.use(
     (response) => {
       return response;
@@ -40,6 +42,7 @@ const Root = () => {
     },
   );
 
+  // TODO: Replace fragment with useEffect logic
   return [
     <Fragment key="redirect">
       {isAuthenticated && (

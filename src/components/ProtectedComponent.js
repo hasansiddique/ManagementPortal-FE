@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
 import storage from '../common/storage';
+// eslint-disable jsx-props-no-spreading
 
 const ProtectedComponent = ({
   path,
@@ -15,7 +16,6 @@ const ProtectedComponent = ({
     path={path}
     exact={exact}
     render={() => (isAuthenticated || storage.get('user') !== undefined ? (
-    // eslint-disable-next-line react/jsx-props-no-spreading
       <Component {...props} />
     ) : (
       <Redirect to="/user/login" />

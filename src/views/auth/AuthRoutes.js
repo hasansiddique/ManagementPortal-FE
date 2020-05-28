@@ -9,6 +9,15 @@ import ResendEmail from './views/ResendEmail';
 import ForgotPassword from './views/ForgotPassword';
 import EmailVerification from './views/EmailVerification';
 import UpdatePassword from './views/UpdatePassword';
+import {
+  EMAIL_VERIFIED,
+  LOGGING_IN,
+  REGISTERING,
+  REGISTERED,
+  LOGGING_OUT,
+  LOGGED_OUT,
+  PASSWORD_UPDATED,
+} from '../../common/constants';
 
 const AuthRoutes = ({
   loginUser,
@@ -18,13 +27,8 @@ const AuthRoutes = ({
   userPasswordReset,
   resendEmailVerification,
   userPasswordUpdate,
-  isLoggingIn,
-  isRegistering,
-  isRegisterSuccess,
-  isLoggingOut,
-  isLoggedOut,
+  authStatus,
   isEmailVerified,
-  isUpdatedPassword,
 }) => {
   return ([
     <Route
@@ -35,7 +39,7 @@ const AuthRoutes = ({
         return (
           <Login
             handleSubmit={loginUser}
-            isLoggingIn={isLoggingIn}
+            isLoggingIn={authStatus === LOGGING_IN}
           />
         );
       }}
@@ -48,8 +52,8 @@ const AuthRoutes = ({
         return (
           <Register
             handleSubmit={registerUser}
-            isRegistering={isRegistering}
-            isRegisterSuccess={isRegisterSuccess}
+            isRegistering={authStatus === REGISTERING}
+            isRegisterSuccess={authStatus === REGISTERED}
           />
         );
       }}
@@ -62,8 +66,8 @@ const AuthRoutes = ({
         return (
           <LogOut
             logOutUser={logoutUser}
-            isLoggingOut={isLoggingOut}
-            isLoggedOut={isLoggedOut}
+            isLoggingOut={authStatus === LOGGING_OUT}
+            isLoggedOut={authStatus === LOGGED_OUT}
           />
         );
       }}
@@ -76,7 +80,7 @@ const AuthRoutes = ({
         return (
           <EmailVerification
             verifyUserEmail={verifyUserEmail}
-            isEmailVerified={isEmailVerified}
+            isEmailVerified={isEmailVerified === EMAIL_VERIFIED}
           />
         );
       }}
@@ -88,7 +92,7 @@ const AuthRoutes = ({
       render={() => {
         return (
           <ForgotPassword
-            isLoggingIn={isLoggingIn}
+            isLoggingIn={authStatus === LOGGING_IN}
             handleSubmit={userPasswordReset}
           />
         );
@@ -102,7 +106,7 @@ const AuthRoutes = ({
         return (
           <ResendEmail
             handleSubmit={resendEmailVerification}
-            isLoggingIn={isLoggingIn}
+            isLoggingIn={authStatus === LOGGING_IN}
           />
         );
       }}
@@ -115,7 +119,7 @@ const AuthRoutes = ({
         return (
           <UpdatePassword
             handleSubmit={userPasswordUpdate}
-            isUpdatedPassword={isUpdatedPassword}
+            isUpdatedPassword={authStatus === PASSWORD_UPDATED}
           />
         );
       }}
@@ -131,13 +135,8 @@ AuthRoutes.propTypes = {
   userPasswordReset: PropTypes.func.isRequired,
   userPasswordUpdate: PropTypes.func.isRequired,
   resendEmailVerification: PropTypes.func.isRequired,
-  isLoggingIn: PropTypes.bool.isRequired,
-  isRegistering: PropTypes.bool.isRequired,
-  isRegisterSuccess: PropTypes.bool.isRequired,
-  isLoggingOut: PropTypes.bool.isRequired,
-  isLoggedOut: PropTypes.bool.isRequired,
-  isEmailVerified: PropTypes.bool.isRequired,
-  isUpdatedPassword: PropTypes.bool.isRequired,
+  authStatus: PropTypes.string.isRequired,
+  isEmailVerified: PropTypes.string.isRequired,
 };
 
 export default AuthRoutes;
