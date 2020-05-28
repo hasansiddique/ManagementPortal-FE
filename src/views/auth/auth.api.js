@@ -40,9 +40,9 @@ export const getUser = () => {
 
     try {
       const userId = get(storage.get('user'), 'user.id');
-      dispatch(fetchedLocalUser());
       const res = await request.get(`/v1/users/${userId}`);
       dispatch(userLoginSuccess(res.data || {}));
+      dispatch(fetchedLocalUser());
       // // Encrypt
       // const encryptData = CryptoJS.AES.encrypt(
       //   JSON.stringify(res.data),
@@ -55,8 +55,8 @@ export const getUser = () => {
       // console.log('decryptedData', decryptedData);
       return res;
     } catch (err) {
-      dispatch(fetchedLocalUser());
       dispatch(userLoginFailure(err));
+      dispatch(fetchedLocalUser());
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
           type: 'error',
@@ -85,7 +85,7 @@ export const loginUser = (payload) => {
 
       dispatch(userLoginSuccess(res.data || {}));
       storage.set('user', { ...res.data });
-      window.location.reload();
+      // window.location.reload();
       return res;
     } catch (err) {
       dispatch(userLoginFailure(err));

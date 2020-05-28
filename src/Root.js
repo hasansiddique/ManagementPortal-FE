@@ -50,7 +50,7 @@ const Root = () => {
 
   return [
     <div key="app" id="app-wrapper">
-      {isLoggingIn ? <AppLoad /> : <AppRoutes />}
+      {isLoggingIn && !isLocalUserFetched ? <AppLoad /> : <AppRoutes />}
     </div>,
   ];
 };
