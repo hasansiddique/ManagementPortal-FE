@@ -45,7 +45,7 @@ const loginReducers = {
   userLoginFailure: (state, action) => state
     .set('user', null)
     .set('isAuthenticated', false)
-    .set('isLocalUserFetched', false)
+    .set('isLocalUserFetched', true)
     .set('authError', action.payload)
     .set('authStatus', LOGIN_ERROR),
 };
