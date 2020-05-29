@@ -17,7 +17,7 @@ import {
 
 import storage from '../../../../../common/storage';
 import { USER_STATE } from '../../../../../common/constants';
-import ModalView from './Employees.modalForm.view';
+import ModalView from './Employees.form';
 import TableHeader from './views/tableHeader';
 
 const { Content } = Layout;
@@ -32,16 +32,13 @@ const EmployeesView = ({
   deleteEmployee,
   getSingleEmployee,
   employee,
-  updateSingleEmployee,
+  updateEmployee,
 }) => {
-  const [visibleModalRegister, setVisible] = useState(false);
+  const [visibleAdd, setVisibleAdd] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [search, setSearch] = useState({ subString: '' });
   const [page, setPage] = useState({ current: 1 });
   const [id, setId] = useState('');
-  const [imgPreview, setImgPreview] = useState(null);
-  const [imgData, setImgData] = useState(null);
   const [radioButton, setRadioBtn] = useState('');
 
   const typeOfId = get(storage.get('user'), 'user.typeOfId');
@@ -62,9 +59,6 @@ const EmployeesView = ({
     }
   }, [id]);
 
-  const [form] = Form.useForm();
-  const { validateFields, resetFields, scrollToField } = form;
-
   const showDeleteConfirm = (itemId) => {
     confirm({
       title: 'Are you sure delete this user?',
@@ -80,77 +74,12 @@ const EmployeesView = ({
     });
   };
 
-  const onFinish = (values) => {
-    createEmployee(values, imgData);
+  const showModalCreate = () => {
+    setVisibleAdd(true);
   };
 
-  const handleOkForRegistration = () => {
-    validateFields()
-      .then((values) => {
-        resetFields();
-        onFinish(values);
-      })
-      .then(() => {
-        setConfirmLoading(true);
-        setTimeout(() => {
-          setVisible(false);
-          setImgPreview(null);
-          setConfirmLoading(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err);
-      });
-  };
-
-  const handleCancelForRegistration = () => {
-    setImgPreview(null);
-    setVisible(false);
-  };
-
-  const updateEmployee = (values) => {
-    updateSingleEmployee(id, values, imgData);
-  };
-
-  const handleOkForUpdate = () => {
-    validateFields()
-      .then((values) => {
-        resetFields();
-        updateEmployee(values);
-      })
-      .then(() => {
-        setConfirmLoading(true);
-        setTimeout(() => {
-          setVisible(false);
-          setId(undefined);
-          setImgPreview(null);
-          setConfirmLoading(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err);
-      });
-    setVisibleUpdate(false);
-  };
-
-  const handleCancelForUpdate = () => {
-    setVisibleUpdate(false);
-    setImgPreview(null);
-    setId(undefined);
-  };
-
-  const showModalForRegistration = () => {
-    setVisible(true);
-  };
-
-  const showModalForUpdate = () => {
+  const showModalUpdate = () => {
     setVisibleUpdate(true);
-  };
-
-  const onFinishFailed = ({ errorFields }) => {
-    scrollToField(errorFields[0].name);
   };
 
   const handleSearch = (e) => {
@@ -166,53 +95,26 @@ const EmployeesView = ({
 
   const onRadioChange = (e) => setRadioBtn(e.target.value);
 
-  const modalState = () => {
-    const register = visibleModalRegister ? 'Employee Registration Form' : null;
-    const update = visibleUpdate ? 'Employee Update Form' : null;
-    const registerOk = visibleModalRegister ? handleOkForRegistration : null;
-    const updateOk = visibleUpdate ? handleOkForUpdate : null;
-    const registerOkText = visibleModalRegister ? 'Register' : null;
-    const updateOkText = visibleUpdate ? 'Update' : null;
-    const registerCancel = visibleModalRegister
-      ? handleCancelForRegistration
-      : null;
-    const updateCancel = visibleUpdate ? handleCancelForUpdate : null;
-    return {
-      register,
-      update,
-      registerOk,
-      updateOk,
-      registerOkText,
-      updateOkText,
-      registerCancel,
-      updateCancel,
-    };
-  };
-
   return (
     <Content>
       <Row>
         <Col span={10}>
-          {typeOfId === USER_STATE.ADMIN_FULL ? (
-            <Button type="primary" onClick={showModalForRegistration}>
+          {typeOfId === USER_STATE.ADMIN_FULL && (
+            <Button type="primary" onClick={showModalCreate}>
               <UserAddOutlined />
               Add Employee
             </Button>
-          ) : null}
+          )}
           <ModalView
-            modalState={modalState}
-            visibleModalRegister={visibleModalRegister}
-            visibleUpdate={visibleUpdate}
-            confirmLoading={confirmLoading}
-            form={form}
+            createEmployee={createEmployee}
             updateEmployee={updateEmployee}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            setImgData={setImgData}
-            setImgPreview={setImgPreview}
-            imgPreview={imgPreview}
-            id={id}
             employee={employee}
+            visibleAdd={visibleAdd}
+            setVisibleAdd={setVisibleAdd}
+            visibleUpdate={visibleUpdate}
+            setVisibleUpdate={setVisibleUpdate}
+            id={id}
+            setId={setId}
           />
         </Col>
         <Col span={8}>
@@ -245,7 +147,7 @@ const EmployeesView = ({
           setId={setId}
           loading={loading}
           showDeleteConfirm={showDeleteConfirm}
-          showModalForUpdate={showModalForUpdate}
+          showModalForUpdate={showModalUpdate}
           search={search}
           page={page}
           setPage={setPage}
@@ -265,7 +167,7 @@ EmployeesView.propTypes = {
   getAllEmployees: PropTypes.func.isRequired,
   deleteEmployee: PropTypes.func.isRequired,
   getSingleEmployee: PropTypes.func.isRequired,
-  updateSingleEmployee: PropTypes.func.isRequired,
+  updateEmployee: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   employees: PropTypes.any.isRequired,
   employee: PropTypes.object,

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import ProtectedComponent from '../../../../components/ProtectedComponent';
 import EmployeesView from './employees/Employees.container';
-import EmployeeView from './employees/employeeDetails.view';
+import EmployeeView from './employees/EmployeeDetails.view';
 
 const { Content } = Layout;
 

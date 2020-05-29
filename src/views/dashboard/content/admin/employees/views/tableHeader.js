@@ -9,7 +9,7 @@ import Moment from 'react-moment';
 
 import { USER_STATE } from '../../../../../../common/constants';
 import storage from '../../../../../../common/storage';
-import List from '../employees.list.view';
+import List from '../Employees.list.view';
 
 const TableHeader = ({
   employees,

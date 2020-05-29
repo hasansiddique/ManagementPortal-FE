@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
   getSingleEmployee: (id) => {
     dispatch(employee(id));
   },
-  updateSingleEmployee: (id, payload, file) => {
+  updateEmployee: (id, payload, file) => {
     dispatch(UpdateEmployee(id, payload, file));
   },
 });

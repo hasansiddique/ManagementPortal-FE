@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropsTypes from 'prop-types';
 
 import {
@@ -19,34 +19,88 @@ const layout = {
 };
 
 const ModalView = ({
-  modalState,
-  visibleModalRegister,
+  visibleAdd,
+  setVisibleAdd,
   visibleUpdate,
-  confirmLoading,
-  onFinish,
+  setVisibleUpdate,
+  createEmployee,
   updateEmployee,
-  form,
-  onFinishFailed,
-  setImgData,
-  setImgPreview,
-  imgPreview,
-  id,
   employee,
+  id,
+  setId,
 }) => {
+  const [imgData, setImgData] = useState(null);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [imgPreview, setImgPreview] = useState(null);
+
+  const [form] = Form.useForm();
   const {
-    register,
-    update,
-    registerOk,
-    updateOk,
-    registerOkText,
-    updateOkText,
-    registerCancel,
-    updateCancel,
-  } = modalState();
+    validateFields, resetFields, setFieldsValue, scrollToField,
+  } = form;
+
+  const onAddSuccessClick = (values) => {
+    createEmployee(values, imgData);
+  };
+
+  const onUpdateSuccessClick = (values) => {
+    updateEmployee(id, values, imgData);
+  };
+
+  const handleSubmitAdd = () => {
+    validateFields()
+      .then((values) => {
+        resetFields();
+        onAddSuccessClick(values);
+      })
+      .then(() => {
+        setConfirmLoading(true);
+        setTimeout(() => {
+          setVisibleAdd(false);
+          setImgPreview(null);
+          setConfirmLoading(false);
+        }, 1000);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      });
+  };
+
+  const handleSubmitUpdate = () => {
+    validateFields()
+      .then((values) => {
+        resetFields();
+        onUpdateSuccessClick(values);
+      })
+      .then(() => {
+        setConfirmLoading(true);
+        setTimeout(() => {
+          setVisibleUpdate(false);
+          setId(undefined);
+          setImgPreview(null);
+          setConfirmLoading(false);
+        }, 1000);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      });
+  };
+
+  const handleCancelAdd = () => {
+    setImgPreview(null);
+    setVisibleAdd(false);
+  };
+
+  const handleCancelUpdate = () => {
+    setVisibleUpdate(false);
+    setImgPreview(null);
+    setId(undefined);
+  };
 
   setTimeout(() => {
     if (id && employee && employee.employee) {
-      form.setFieldsValue({
+      setFieldsValue({
         name: employee.employee.name,
         email: employee.employee.email,
         gender: employee.employee.gender,
@@ -56,25 +110,29 @@ const ModalView = ({
         address: employee.employee.address,
       });
     } else {
-      form.resetFields();
+      resetFields();
     }
   }, 25);
 
   if (id === undefined) {
     setTimeout(() => {
-      form.resetFields();
+      resetFields();
     }, 25);
   }
+
+  const onFinishFailed = ({ errorFields }) => {
+    scrollToField(errorFields[0].name);
+  };
 
   return (
     <Modal
       getContainer={false}
-      title={register || update}
-      visible={visibleModalRegister || visibleUpdate}
-      onOk={registerOk || updateOk}
-      okText={registerOkText || updateOkText}
+      title={visibleUpdate ? 'Update Employee Form' : 'Add Employee Form'}
+      visible={visibleAdd || visibleUpdate}
+      onOk={visibleUpdate ? handleSubmitUpdate : handleSubmitAdd}
+      okText={visibleUpdate ? 'Update' : 'Add'}
       confirmLoading={confirmLoading}
-      onCancel={registerCancel || updateCancel}
+      onCancel={visibleUpdate ? handleCancelUpdate : handleCancelAdd}
       maskClosable={false}
     >
       <Row>
@@ -92,7 +150,7 @@ const ModalView = ({
         wrapperCol={layout.wrapperCol}
         form={form}
         name="nest-messages"
-        onFinish={visibleModalRegister ? onFinish : updateEmployee}
+        onFinish={visibleUpdate ? onUpdateSuccessClick : onAddSuccessClick}
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
@@ -187,24 +245,19 @@ const ModalView = ({
 };
 
 ModalView.defaultProps = {
-  imgPreview: null,
   employee: null,
   id: '',
 };
 
 ModalView.propTypes = {
-  modalState: PropsTypes.func.isRequired,
-  visibleModalRegister: PropsTypes.bool.isRequired,
+  createEmployee: PropsTypes.func.isRequired,
+  visibleAdd: PropsTypes.bool.isRequired,
+  setVisibleAdd: PropsTypes.func.isRequired,
   visibleUpdate: PropsTypes.bool.isRequired,
-  confirmLoading: PropsTypes.bool.isRequired,
-  onFinish: PropsTypes.func.isRequired,
+  setVisibleUpdate: PropsTypes.func.isRequired,
   updateEmployee: PropsTypes.func.isRequired,
-  onFinishFailed: PropsTypes.func.isRequired,
-  form: PropsTypes.object.isRequired,
-  setImgData: PropsTypes.any.isRequired,
-  setImgPreview: PropsTypes.any.isRequired,
-  imgPreview: PropsTypes.string,
   id: PropsTypes.string,
+  setId: PropsTypes.func.isRequired,
   employee: PropsTypes.object,
 };
 
