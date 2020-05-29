@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'antd';
 import PropTypes from 'prop-types';
 
-import AuthRoutes from './AuthRoutes';
+import AuthRoutes from './auth.routes';
 
 const Authentication = (props) => {
   return (

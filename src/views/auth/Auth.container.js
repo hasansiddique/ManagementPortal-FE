@@ -26,7 +26,6 @@ const AuthContainer = () => {
     resendEmailVerification: (token) => dispatch(resendEmailVerification(token)),
     userPasswordUpdate: (payload) => dispatch(userPasswordUpdate(payload)),
   };
-  // eslint-disable jsx-props-no-spreading
 
   return (
     <Authentication

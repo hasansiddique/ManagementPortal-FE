@@ -40,13 +40,14 @@ const loginReducers = {
   userLoginSuccess: (state, action) => state
     .set('user', action.payload)
     .set('isAuthenticated', true)
+    .set('isLocalUserFetched', true)
     .set('authStatus', LOGGED_IN),
   userLoginFailure: (state, action) => state
     .set('user', null)
     .set('isAuthenticated', false)
+    .set('isLocalUserFetched', false)
     .set('authError', action.payload)
     .set('authStatus', LOGIN_ERROR),
-  fetchedLocalUser: (state) => state.set('isLocalUserFetched', true),
 };
 
 const logoutReducers = {
@@ -145,7 +146,6 @@ export const {
   requestUserPasswordUpdate,
   userPasswordUpdateFailure,
   userPasswordUpdateSuccess,
-  fetchedLocalUser,
 } = authSlice.actions;
 
 export default authSlice.reducer;

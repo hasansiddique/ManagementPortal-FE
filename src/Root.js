@@ -30,8 +30,6 @@ const Root = () => {
     }
   }, [getUserFromApi, isAuthenticated]);
 
-  // it will automatically sends refresh token if access token is not valid
-
   return [
     <div key="app" id="app-wrapper">
       {isLoggingIn && !isLocalUserFetched ? <AppLoad /> : <AppRoutes />}

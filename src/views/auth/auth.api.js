@@ -28,7 +28,6 @@ import {
   requestUserPasswordUpdate,
   userPasswordUpdateSuccess,
   userPasswordUpdateFailure,
-  fetchedLocalUser,
 } from './auth.store';
 
 // @Todo (Hanzlah) working on crypto js for data encryption and decryption for security if required
@@ -42,7 +41,6 @@ export const getUser = () => {
       const userId = get(storage.get('user'), 'user.id');
       const res = await request.get(`/v1/users/${userId}`);
       dispatch(userLoginSuccess(res.data || {}));
-      dispatch(fetchedLocalUser());
       // // Encrypt
       // const encryptData = CryptoJS.AES.encrypt(
       //   JSON.stringify(res.data),
@@ -56,7 +54,6 @@ export const getUser = () => {
       return res;
     } catch (err) {
       dispatch(userLoginFailure(err));
-      dispatch(fetchedLocalUser());
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
           type: 'error',
