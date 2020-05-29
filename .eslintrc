@@ -36,10 +36,7 @@
     "react/forbid-prop-types": "off",
     "react/no-access-state-in-setstate": "off",
     "import/prefer-default-export": "off",
-    "no-restricted-syntax": [
-      "error",
-      "LabeledStatement",
-      "WithStatement"
-    ]
+    "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
+    "react/jsx-props-no-spreading": "off"
   }
 }

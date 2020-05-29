@@ -27,6 +27,22 @@ export const EMAIL_VERIFYING = 'EMAIL_VERIFYING';
 export const EMAIL_VERIFIED = 'EMAIL_VERIFIED';
 export const EMAIL_VERIFICATION_CONFLICT = 'EMAIL_VERIFICATION_CONFLICT';
 
+export const LOGGING_IN = 'LOGGING_IN';
+export const LOGGED_IN = 'LOGGED_IN';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+
+export const REGISTERING = 'REGISTERING';
+export const REGISTERED = 'REGISTERED';
+export const REGISTER_ERROR = 'REGISTER_ERROR';
+
+export const LOGGING_OUT = 'IS_LOGGING_OUT';
+export const LOGGED_OUT = 'IS_LOGGING_OUT';
+export const LOGOUT_ERROR = 'LOG_OUT_ERROR';
+
+export const UPDATING_PASSWORD = 'UPDATING_PASSWORD';
+export const PASSWORD_UPDATED = 'PASSWORD_UPDATED';
+export const PASSWORD_UPDATE_ERROR = 'PASSWORD_UPDATE_ERROR';
+
 export const AUTH_ROUTES = [
   '/',
   '/user',

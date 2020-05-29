@@ -1,9 +1,14 @@
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import {
+  Link,
+  Redirect,
+  useParams,
+} from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Result, Spin } from 'antd';
 
-const EmailVerification = ({ match, verifyUserEmail, isEmailVerified }) => {
+const EmailVerification = ({ verifyUserEmail, isEmailVerified }) => {
+  const { token } = useParams();
   const [fireRedirect, handleFireRedirect] = useState(false);
   const [route, handleRoute] = useState('');
 
@@ -14,10 +19,10 @@ const EmailVerification = ({ match, verifyUserEmail, isEmailVerified }) => {
   }, [isEmailVerified]);
 
   useEffect(() => {
-    if (match && match.params && match.params.token) {
-      verifyUserEmail(match.params.token);
+    if (token) {
+      verifyUserEmail(token);
     }
-  }, [match, verifyUserEmail]);
+  }, [token, verifyUserEmail]);
 
   return (
     <>
@@ -60,8 +65,7 @@ const EmailVerification = ({ match, verifyUserEmail, isEmailVerified }) => {
 
 
 EmailVerification.propTypes = {
-  match: PropTypes.object.isRequired,
   verifyUserEmail: PropTypes.func.isRequired,
   isEmailVerified: PropTypes.string.isRequired,
 };
-export default withRouter(EmailVerification);
+export default EmailVerification;

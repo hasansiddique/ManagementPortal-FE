@@ -10,10 +10,11 @@ import configureStore from './state/configureStore';
 import Root from './Root';
 
 export const store = configureStore();
+export const history = createBrowserHistory();
 
 const App = () => (
   <Provider store={store}>
-    <Router history={createBrowserHistory()}>
+    <Router history={history}>
       <BreadcrumbsProvider>
         <Root />
       </BreadcrumbsProvider>

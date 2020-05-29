@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 import TopBar from './layout/Topbar';
@@ -9,9 +9,10 @@ import Content from './content/DashboardContent';
 import { USER_STATE } from '../../common/constants';
 
 const Dashboard = ({
-  isAuthenticated, location, history, match, user,
+  isAuthenticated, location, match, user,
 }) => {
   const [collapsed, toggleSideBar] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     if (isAuthenticated && user && user.user && location
@@ -51,7 +52,7 @@ Dashboard.defaultProps = {
 Dashboard.propTypes = {
   user: PropTypes.object,
   match: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  // history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
