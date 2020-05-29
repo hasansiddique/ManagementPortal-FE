@@ -34,6 +34,7 @@ axios.interceptors.response.use(
         history.push('/resource-not-found');
         break;
       case 500:
+      case 504:
         history.push('/internal-server-error');
         break;
       default:
