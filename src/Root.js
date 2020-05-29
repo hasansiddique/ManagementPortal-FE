@@ -24,15 +24,14 @@ const Root = () => {
   useEffect(() => {
     if (isAuthenticated && AUTH_ROUTES.includes(location.pathname)) {
       history.push('/dashboard');
-    }
-    if (!isAuthenticated && !isLocalUserFetched && get(storage.get('user'), 'token')) {
+    } else if (!isAuthenticated && !isLocalUserFetched && get(storage.get('user'), 'token')) {
       getUserFromApi();
     }
-  }, [getUserFromApi, isAuthenticated]);
+  }, [isAuthenticated]);
 
   return [
     <div key="app" id="app-wrapper">
-      {isLoggingIn && !isLocalUserFetched ? <AppLoad /> : <AppRoutes />}
+      {isLoggingIn || (!isLocalUserFetched && get(storage.get('user'), 'token')) ? <AppLoad /> : <AppRoutes />}
     </div>,
   ];
 };
