@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Menu } from 'antd';
+import {
+  Avatar, Menu,
+} from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { LogoutOutlined, EditOutlined } from '@ant-design/icons';
 

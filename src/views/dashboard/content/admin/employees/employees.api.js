@@ -64,7 +64,7 @@ export const createEmployee = (payload, file) => {
   };
 };
 
-export const getAllEmployees = () => {
+export const employees = () => {
   return async (dispatch) => {
     dispatch(requestFetchingEmployees());
     try {
@@ -137,7 +137,7 @@ export const deleteEmployee = (id) => {
   };
 };
 
-export const getSingleEmployee = (id) => {
+export const employee = (id) => {
   return async (dispatch) => {
     dispatch(requestSingleEmployee());
     try {
@@ -170,7 +170,7 @@ export const getSingleEmployee = (id) => {
   };
 };
 
-export const UpdateSingleEmployee = (id, payload, file) => {
+export const UpdateEmployee = (id, payload, file) => {
   const form = new FormData();
   form.append('file', file);
   form.append('name', payload.name);

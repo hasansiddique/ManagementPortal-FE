@@ -13,6 +13,7 @@ const date = new Date();
 const DashboardContent = ({ match, location }) => {
   return [
     <div
+      key="bread-crumb"
       style={{
         background: 'white',
         padding: '0 24px',

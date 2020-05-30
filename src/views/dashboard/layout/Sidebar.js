@@ -3,7 +3,6 @@ import split from 'lodash/split';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 
 import { getSideBarRoutes } from '../dashboard.routes';
 
@@ -30,7 +29,7 @@ const Sidebar = ({
             return (
               <Menu.Item key={route.item}>
                 <Link to={`${match.url}${route.url}`} href={route.title}>
-                  <UserOutlined />
+                  {route.icon}
                   <span>{route.title}</span>
                 </Link>
               </Menu.Item>
