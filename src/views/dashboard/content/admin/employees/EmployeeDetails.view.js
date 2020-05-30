@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 import {
   Col, Row, Layout, Typography, Button, Avatar, Spin,
 } from 'antd';
 
-import { employee } from './employees.api';
+import { fetchEmployee } from './employees.api';
 
 const { Content } = Layout;
 const { Text } = Typography;
 
-const Employee = ({
-  match, getEmployee, employeeState, statusUpdate,
-}) => {
+const Employee = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  const statusUpdate = useSelector((state) => state.getIn(['dashboard', 'admin', 'employees', 'statusUpdate']));
+  const employee = useSelector((state) => state.getIn(['dashboard', 'admin', 'employees', 'employee']));
+
+  const getEmployee = (employeeId) => dispatch(fetchEmployee(employeeId));
+
   useEffect(() => {
-    getEmployee(match.params.id);
+    getEmployee(id);
   }, []);
 
   return (
@@ -33,10 +39,10 @@ const Employee = ({
           <Content>
             <Row style={{ marginLeft: '195px', marginTop: '25px', padding: '40px' }}>
               {
-                employeeState && employeeState.employee ? (
+                employee && employee.employee ? (
                   <Avatar
                     size={180}
-                    src={`http://localhost:8000/${employeeState.employee.photo}`}
+                    src={`http://localhost:8000/${employee.employee.photo}`}
                   />
                 ) : null
               }
@@ -59,51 +65,51 @@ const Employee = ({
               </Col>
               <Col span={4}>
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.name}
+                  {employee
+                && employee.employee
+                && employee.employee.name}
                 </Text>
                 <br />
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.age}
+                  {employee
+                && employee.employee
+                && employee.employee.age}
                 </Text>
                 <br />
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.gender}
+                  {employee
+                && employee.employee
+                && employee.employee.gender}
                 </Text>
                 <br />
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.designation}
+                  {employee
+                && employee.employee
+                && employee.employee.designation}
                 </Text>
                 <br />
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.email}
+                  {employee
+                && employee.employee
+                && employee.employee.email}
                 </Text>
                 <br />
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.department}
+                  {employee
+                && employee.employee
+                && employee.employee.department}
                 </Text>
                 <br />
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.joinDate.split('T')[0]}
+                  {employee
+                && employee.employee
+                && employee.employee.joinDate.split('T')[0]}
                 </Text>
                 <br />
                 <Text>
-                  {employeeState
-                && employeeState.employee
-                && employeeState.employee.address}
+                  {employee
+                && employee.employee
+                && employee.employee.address}
                 </Text>
               </Col>
             </Row>
@@ -114,26 +120,4 @@ const Employee = ({
   );
 };
 
-Employee.defaultProps = {
-  employeeState: null,
-};
-
-Employee.propTypes = {
-  match: PropTypes.object.isRequired,
-  getEmployee: PropTypes.func.isRequired,
-  employeeState: PropTypes.object,
-  statusUpdate: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  employeeState: state.getIn(['dashboard', 'admin', 'employees', 'employee']),
-  statusUpdate: state.getIn(['dashboard', 'admin', 'employees', 'statusUpdate']),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getEmployee: (id) => {
-    dispatch(employee(id));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Employee);
+export default Employee;

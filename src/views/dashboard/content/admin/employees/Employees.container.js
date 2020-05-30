@@ -1,37 +1,34 @@
-import { connect } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import EmployeesView from './Employees.view';
 
 import {
   createEmployee,
-  employees,
+  fetchEmployees,
   deleteEmployee,
-  employee,
-  UpdateEmployee,
+  fetchEmployee,
+  updateEmployee,
 } from './employees.api';
 
-const mapStateToProps = (state) => ({
-  loading: state.getIn(['dashboard', 'admin', 'employees', 'loading']),
-  employees: state.getIn(['dashboard', 'admin', 'employees', 'employees']),
-  statusUpdate: state.getIn(['dashboard', 'admin', 'employees', 'statusUpdate']),
-  employee: state.getIn(['dashboard', 'admin', 'employees', 'employee']),
-});
+const EmployeesContainer = () => {
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch) => ({
-  createEmployee: (payload, file) => {
-    dispatch(createEmployee(payload, file));
-  },
-  getAllEmployees: () => {
-    dispatch(employees());
-  },
-  deleteEmployee: (id) => {
-    dispatch(deleteEmployee(id));
-  },
-  getSingleEmployee: (id) => {
-    dispatch(employee(id));
-  },
-  updateEmployee: (id, payload, file) => {
-    dispatch(UpdateEmployee(id, payload, file));
-  },
-});
+  const props = {
+    statusUpdate: useSelector((state) => state.getIn(['dashboard', 'admin', 'employees', 'statusUpdate'])),
+    employees: useSelector((state) => state.getIn(['dashboard', 'admin', 'employees', 'employees'])),
+    employee: useSelector((state) => state.getIn(['dashboard', 'admin', 'employees', 'employee'])),
+    createEmployee: (payload, file) => dispatch(createEmployee(payload, file)),
+    fetchEmployees: () => dispatch(fetchEmployees()),
+    fetchEmployee: (id) => dispatch(fetchEmployee(id)),
+    updateEmployee: (id, payload, file) => dispatch(updateEmployee(id, payload, file)),
+    deleteEmployee: (id) => dispatch(deleteEmployee(id)),
+  };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeesView);
+  return (
+    <EmployeesView {...props} />
+  );
+};
+
+
+export default EmployeesContainer;

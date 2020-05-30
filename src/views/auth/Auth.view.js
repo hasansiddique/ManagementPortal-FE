@@ -11,13 +11,12 @@ const Authentication = (props) => {
         <section className="auth-content">
 
           <div className="auth-logo">
-            <img src="/wanclouds-logo.jpg" alt=" Wanclouds" height={100} />
+            <img src="/wanclouds-logo.jpg" alt=" WanClouds" height={100} />
           </div>
 
           <div className="auth-component">
             <Card>
               <AuthRoutes
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...props}
               />
             </Card>
@@ -25,7 +24,7 @@ const Authentication = (props) => {
 
         </section>
         <footer className="auth-footer">
-          Copyright 2020. Wanclouds, Inc.
+          Copyright 2020. WanClouds, Inc.
         </footer>
       </div>
     </div>

@@ -24,15 +24,14 @@ const { Content } = Layout;
 const { confirm } = Modal;
 
 const EmployeesView = ({
+  createEmployee,
+  fetchEmployees,
+  fetchEmployee,
+  updateEmployee,
+  deleteEmployee,
+  employee,
   employees,
   statusUpdate,
-  createEmployee,
-  getAllEmployees,
-  loading,
-  deleteEmployee,
-  getSingleEmployee,
-  employee,
-  updateEmployee,
 }) => {
   const [visibleAdd, setVisibleAdd] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
@@ -50,12 +49,12 @@ const EmployeesView = ({
   };
 
   useEffect(() => {
-    getAllEmployees();
+    fetchEmployees();
   }, [status[statusUpdate]]);
 
   useEffect(() => {
     if (id) {
-      getSingleEmployee(id);
+      fetchEmployee(id);
     }
   }, [id]);
 
@@ -135,7 +134,7 @@ const EmployeesView = ({
           </Form.Item>
         </Col>
       </Row>
-      {loading ? (
+      {statusUpdate === 'FETCHING' ? (
         <Spin
           size="large"
           tip="Loading..."
@@ -145,7 +144,6 @@ const EmployeesView = ({
         <TableHeader
           employees={employees}
           setId={setId}
-          loading={loading}
           showDeleteConfirm={showDeleteConfirm}
           showModalForUpdate={showModalUpdate}
           search={search}
@@ -164,11 +162,10 @@ EmployeesView.defaultProps = {
 
 EmployeesView.propTypes = {
   createEmployee: PropTypes.func.isRequired,
-  getAllEmployees: PropTypes.func.isRequired,
-  deleteEmployee: PropTypes.func.isRequired,
-  getSingleEmployee: PropTypes.func.isRequired,
+  fetchEmployees: PropTypes.func.isRequired,
+  fetchEmployee: PropTypes.func.isRequired,
   updateEmployee: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  deleteEmployee: PropTypes.func.isRequired,
   employees: PropTypes.any.isRequired,
   employee: PropTypes.object,
   statusUpdate: PropTypes.string.isRequired,

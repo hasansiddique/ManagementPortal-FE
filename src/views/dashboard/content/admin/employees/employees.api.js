@@ -4,21 +4,21 @@ import { openNotification } from '../../../../../components/Notification';
 
 import {
   requestEmployeeCreation,
-  EmployeeCreationSuccess,
-  EmployeeCreationFailure,
+  employeeCreationSuccess,
+  employeeCreationFailure,
   requestFetchingEmployees,
-  EmployeeFetchingSuccess,
-  EmployeeFetchingFailure,
+  employeesFetchingSuccess,
+  employeesFetchingFailure,
   requestEmployeeDeletion,
-  EmployeeDeletionSuccess,
-  EmployeeDeletionFailure,
-  requestSingleEmployee,
-  SingleEmployeeSuccess,
-  SingleEmployeeFailure,
+  employeeDeletionSuccess,
+  employeeDeletionFailure,
+  requestFetchingEmployee,
+  employeeFetchingSuccess,
+  employeeFetchingFailure,
   requestUpdateEmployee,
-  EmployeeUpdateSuccess,
-  EmployeeUpdateFailure,
-} from './employees.actions';
+  employeeUpdateSuccess,
+  employeeUpdateFailure,
+} from './employees.store';
 
 export const createEmployee = (payload, file) => {
   const formData = new FormData();
@@ -35,7 +35,7 @@ export const createEmployee = (payload, file) => {
 
     try {
       const res = await request.post('/v1/employee/create', formData);
-      dispatch(EmployeeCreationSuccess());
+      dispatch(employeeCreationSuccess());
       if (res.status === HTTP_STATUS.CREATED) {
         openNotification({
           type: 'success',
@@ -45,7 +45,7 @@ export const createEmployee = (payload, file) => {
       }
       return res;
     } catch (err) {
-      dispatch(EmployeeCreationFailure());
+      dispatch(employeeCreationFailure());
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
           type: 'error',
@@ -64,15 +64,15 @@ export const createEmployee = (payload, file) => {
   };
 };
 
-export const employees = () => {
+export const fetchEmployees = () => {
   return async (dispatch) => {
     dispatch(requestFetchingEmployees());
     try {
       const res = await request.get('/v1/employee');
-      dispatch(EmployeeFetchingSuccess(res.data || {}));
+      dispatch(employeesFetchingSuccess(res.data || {}));
       return res;
     } catch (err) {
-      dispatch(EmployeeFetchingFailure(err));
+      dispatch(employeesFetchingFailure(err));
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
           type: 'error',
@@ -102,7 +102,7 @@ export const deleteEmployee = (id) => {
     dispatch(requestEmployeeDeletion());
     try {
       const res = await request.delete(`/v1/employee/${id}`);
-      dispatch(EmployeeDeletionSuccess());
+      dispatch(employeeDeletionSuccess());
       if (res.status === 200) {
         openNotification({
           type: 'success',
@@ -112,7 +112,7 @@ export const deleteEmployee = (id) => {
       }
       return res;
     } catch (err) {
-      dispatch(EmployeeDeletionFailure);
+      dispatch(employeeDeletionFailure);
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
           type: 'error',
@@ -137,15 +137,15 @@ export const deleteEmployee = (id) => {
   };
 };
 
-export const employee = (id) => {
+export const fetchEmployee = (id) => {
   return async (dispatch) => {
-    dispatch(requestSingleEmployee());
+    dispatch(requestFetchingEmployee());
     try {
       const res = await request.get(`/v1/employee/${id}`);
-      dispatch(SingleEmployeeSuccess(res.data || {}));
+      dispatch(employeeFetchingSuccess(res.data || {}));
       return res;
     } catch (err) {
-      dispatch(SingleEmployeeFailure(err));
+      dispatch(employeeFetchingFailure(err));
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
           type: 'error',
@@ -170,7 +170,7 @@ export const employee = (id) => {
   };
 };
 
-export const UpdateEmployee = (id, payload, file) => {
+export const updateEmployee = (id, payload, file) => {
   const form = new FormData();
   form.append('file', file);
   form.append('name', payload.name);
@@ -184,7 +184,7 @@ export const UpdateEmployee = (id, payload, file) => {
     dispatch(requestUpdateEmployee());
     try {
       const res = await request.put(`/v1/employee/${id}`, form);
-      dispatch(EmployeeUpdateSuccess());
+      dispatch(employeeUpdateSuccess());
       if (res.status === 200) {
         openNotification({
           type: 'success',
@@ -194,7 +194,7 @@ export const UpdateEmployee = (id, payload, file) => {
       }
       return res;
     } catch (err) {
-      dispatch(EmployeeUpdateFailure());
+      dispatch(employeeUpdateFailure());
       if (err.response.status === HTTP_STATUS.UNAUTHORIZED) {
         openNotification({
           type: 'error',
