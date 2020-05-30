@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
 import storage from '../common/storage';
+// eslint-disable jsx-props-no-spreading
 
 const ProtectedComponent = ({
   path,
@@ -26,6 +27,7 @@ const ProtectedComponent = ({
     />
   );
 };
+
 
 ProtectedComponent.defaultProps = {
   isAuthenticated: false,
