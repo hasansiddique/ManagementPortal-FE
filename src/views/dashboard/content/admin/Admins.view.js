@@ -3,7 +3,7 @@ import React from 'react';
 
 import ProtectedComponent from '../../../../components/ProtectedComponent';
 import EmployeesView from './employees/Employees.container';
-import EmployeeView from './employees/EmployeeDetails.view';
+import EmployeeDetailsContainer from './employees/EmployeeDetails.container';
 
 const { Content } = Layout;
 
@@ -16,7 +16,7 @@ const Admins = () => {
       />
       <ProtectedComponent
         path="/dashboard/admin/employee/:id"
-        Component={EmployeeView}
+        Component={EmployeeDetailsContainer}
       />
     </Content>
   );

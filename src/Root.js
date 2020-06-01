@@ -31,7 +31,7 @@ const Root = () => {
 
   return [
     <div key="app" id="app-wrapper">
-      {!user && isLocalUserFetched ? <AppLoad /> : <AppRoutes />}
+      {user === null && isLocalUserFetched === false ? <AppLoad /> : <AppRoutes />}
     </div>,
   ];
 };

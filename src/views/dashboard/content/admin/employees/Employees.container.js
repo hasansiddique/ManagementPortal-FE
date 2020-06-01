@@ -25,10 +25,7 @@ const EmployeesContainer = () => {
     deleteEmployee: (id) => dispatch(deleteEmployee(id)),
   };
 
-  return (
-    <EmployeesView {...props} />
-  );
+  return <EmployeesView {...props} />;
 };
-
 
 export default EmployeesContainer;

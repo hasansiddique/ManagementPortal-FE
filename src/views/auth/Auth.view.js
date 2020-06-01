@@ -11,7 +11,7 @@ const Authentication = (props) => {
         <section className="auth-content">
 
           <div className="auth-logo">
-            <img src="/wanclouds-logo.jpg" alt=" WanClouds" height={100} />
+            <img src="/wanclouds-logo.jpg" alt=" Wanclouds" height={100} />
           </div>
 
           <div className="auth-component">
@@ -24,7 +24,7 @@ const Authentication = (props) => {
 
         </section>
         <footer className="auth-footer">
-          Copyright 2020. WanClouds, Inc.
+          Copyright 2020. Wanclouds, Inc.
         </footer>
       </div>
     </div>

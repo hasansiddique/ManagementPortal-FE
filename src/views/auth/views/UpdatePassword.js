@@ -16,7 +16,7 @@ const UpdatePassword = ({ handleSubmit, isUpdatedPassword }) => {
   };
   return (
     <>
-      {isUpdatedPassword && <Redirect to="/dashboard" /> && window.location.reload()}
+      {isUpdatedPassword && <Redirect to="/user/logout" />}
       <h2>Update Password</h2>
       <Form
         onFinish={onFinish}
@@ -64,7 +64,7 @@ const UpdatePassword = ({ handleSubmit, isUpdatedPassword }) => {
             Update Password
           </Button>
           <Link
-            to="/dashboard"
+            to="/user"
             onClick={onClick}
             type="secondary"
             style={{ width: '100%', marginTop: '11px' }}

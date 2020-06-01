@@ -1,28 +1,20 @@
 import React, { useEffect } from 'react';
+import PropsTypes from 'prop-types';
 
 import { Link, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import {
   Col, Row, Layout, Typography, Button, Avatar, Spin,
 } from 'antd';
 
-import { fetchEmployee } from './employees.api';
-
 const { Content } = Layout;
 const { Text } = Typography;
 
-const Employee = () => {
-  const dispatch = useDispatch();
+const Employee = ({ statusUpdate, employee, fetchEmployee }) => {
   const { id } = useParams();
 
-  const statusUpdate = useSelector((state) => state.getIn(['dashboard', 'admin', 'employees', 'statusUpdate']));
-  const employee = useSelector((state) => state.getIn(['dashboard', 'admin', 'employees', 'employee']));
-
-  const getEmployee = (employeeId) => dispatch(fetchEmployee(employeeId));
-
   useEffect(() => {
-    getEmployee(id);
+    fetchEmployee(id);
   }, []);
 
   return (
@@ -63,7 +55,7 @@ const Employee = () => {
                 <br />
                 <Text strong> Address: </Text>
               </Col>
-              <Col span={4}>
+              <Col span={12}>
                 <Text>
                   {employee
                 && employee.employee
@@ -118,6 +110,16 @@ const Employee = () => {
       </div>
     </>
   );
+};
+
+Employee.defaultProps = {
+  employee: null,
+};
+
+Employee.propTypes = {
+  statusUpdate: PropsTypes.string.isRequired,
+  employee: PropsTypes.object,
+  fetchEmployee: PropsTypes.func.isRequired,
 };
 
 export default Employee;
