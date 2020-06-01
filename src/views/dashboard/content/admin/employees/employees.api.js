@@ -20,7 +20,7 @@ import {
   employeeUpdateFailure,
 } from './employees.store';
 
-const test = (payload, file) => {
+const form = (payload, file) => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('name', payload.name);
@@ -34,7 +34,7 @@ const test = (payload, file) => {
 };
 
 export const createEmployee = (payload, file) => {
-  const { formData } = test(payload, file);
+  const { formData } = form(payload, file);
   return async (dispatch) => {
     dispatch(requestEmployeeCreation());
 
@@ -176,7 +176,7 @@ export const fetchEmployee = (id) => {
 };
 
 export const updateEmployee = (id, payload, file) => {
-  const { formData } = test(payload, file);
+  const { formData } = form(payload, file);
   return async (dispatch) => {
     dispatch(requestUpdateEmployee());
     try {
