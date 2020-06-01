@@ -39,12 +39,12 @@ const Employee = () => {
           <Content>
             <Row style={{ marginLeft: '195px', marginTop: '25px', padding: '40px' }}>
               {
-                employee && employee.employee ? (
+                employee && employee.employee && (
                   <Avatar
                     size={180}
                     src={`http://localhost:8000/${employee.employee.photo}`}
                   />
-                ) : null
+                )
               }
               <Col span={4} style={{ marginLeft: '50px' }}>
                 <Text strong> Name: </Text>

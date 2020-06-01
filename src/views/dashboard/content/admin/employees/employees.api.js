@@ -20,7 +20,7 @@ import {
   employeeUpdateFailure,
 } from './employees.store';
 
-export const createEmployee = (payload, file) => {
+const test = (payload, file) => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('name', payload.name);
@@ -30,6 +30,11 @@ export const createEmployee = (payload, file) => {
   formData.append('designation', payload.designation);
   formData.append('department', payload.department);
   formData.append('address', payload.address);
+  return { formData };
+};
+
+export const createEmployee = (payload, file) => {
+  const { formData } = test(payload, file);
   return async (dispatch) => {
     dispatch(requestEmployeeCreation());
 
@@ -171,19 +176,11 @@ export const fetchEmployee = (id) => {
 };
 
 export const updateEmployee = (id, payload, file) => {
-  const form = new FormData();
-  form.append('file', file);
-  form.append('name', payload.name);
-  form.append('email', payload.email);
-  form.append('age', payload.age);
-  form.append('gender', payload.gender);
-  form.append('designation', payload.designation);
-  form.append('department', payload.department);
-  form.append('address', payload.address);
+  const { formData } = test(payload, file);
   return async (dispatch) => {
     dispatch(requestUpdateEmployee());
     try {
-      const res = await request.put(`/v1/employee/${id}`, form);
+      const res = await request.put(`/v1/employee/${id}`, formData);
       dispatch(employeeUpdateSuccess());
       if (res.status === 200) {
         openNotification({

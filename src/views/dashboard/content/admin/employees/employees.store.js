@@ -43,8 +43,8 @@ const employeeDeletionReducer = {
 };
 
 const employeeFetchingReducer = {
-  requestFetchingEmployee: (state) => state.set('employee', null),
-  employeeFetchingSuccess: (state, action) => state.set('employee', action.payload),
+  requestFetchingEmployee: (state) => state.set('statusUpdate', PENDING).set('employee', null),
+  employeeFetchingSuccess: (state, action) => state.set('statusUpdate', FETCHED).set('employee', action.payload),
   employeeFetchingFailure: (state, action) => state
     .set('statusUpdate', FAILURE)
     .set('employee', null)
