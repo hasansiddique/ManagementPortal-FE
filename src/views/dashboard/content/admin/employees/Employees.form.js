@@ -40,10 +40,12 @@ const ModalView = ({
 
   const onAddSuccessClick = (values) => {
     createEmployee(values, imgData);
+    setImgData(null);
   };
 
   const onUpdateSuccessClick = (values) => {
     updateEmployee(id, values, imgData);
+    setImgData(null);
   };
 
   const handleSubmitAdd = () => {
@@ -90,11 +92,13 @@ const ModalView = ({
   const handleCancelAdd = () => {
     setImgPreview(null);
     setVisibleAdd(false);
+    setImgData(null);
   };
 
   const handleCancelUpdate = () => {
     setVisibleUpdate(false);
     setImgPreview(null);
+    setImgData(null);
     setId(undefined);
   };
 

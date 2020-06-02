@@ -9,11 +9,10 @@ import Moment from 'react-moment';
 
 import { USER_STATE } from '../../../../../../common/constants';
 import storage from '../../../../../../common/storage';
-import List from '../Employees.list.view';
+import List from '../Employees.List.view';
 
 const TableHeader = ({
   employees,
-  loading,
   showDeleteConfirm,
   showModalForUpdate,
   setId,
@@ -22,7 +21,7 @@ const TableHeader = ({
   radioButton,
   setPage,
 }) => {
-  let data = !loading && employees
+  let data = employees && employees.employee
     ? employees.employee.map((row, index) => ({
       Name: row.name.charAt(0).toUpperCase() + row.name.slice(1),
       Gender: row.gender.charAt(0).toUpperCase() + row.gender.slice(1),
@@ -40,7 +39,7 @@ const TableHeader = ({
     ? item.Department.includes(radioButton)
     : item.Name.toLowerCase().includes(search.subString.toLowerCase())));
 
-  const empLength = !loading && employees ? employees.length : 0;
+  const empLength = employees ? employees.length : 0;
   const typeOfId = get(storage.get('user'), 'user.typeOfId');
 
   // @Todo (Hanzlah)  working on image url to be served as static file
@@ -114,8 +113,7 @@ const TableHeader = ({
 };
 
 TableHeader.propTypes = {
-  loading: PropsTypes.bool.isRequired,
-  employees: PropsTypes.object.isRequired,
+  employees: PropsTypes.any.isRequired,
   showDeleteConfirm: PropsTypes.func.isRequired,
   showModalForUpdate: PropsTypes.func.isRequired,
   setId: PropsTypes.func.isRequired,

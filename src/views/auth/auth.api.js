@@ -82,7 +82,7 @@ export const loginUser = (payload) => {
 
       dispatch(userLoginSuccess(res.data || {}));
       storage.set('user', { ...res.data });
-      // window.location.reload();
+      window.location.reload();
       return res;
     } catch (err) {
       dispatch(userLoginFailure(err));

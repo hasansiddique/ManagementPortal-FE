@@ -23,7 +23,7 @@ const List = ({
       columns={columns}
       dataSource={data}
       pagination={{
-        defaultPageSize: 4,
+        defaultPageSize: 10,
         current: page.current,
         onChange,
         total: { empLength },

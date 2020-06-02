@@ -17,7 +17,6 @@ const Authentication = (props) => {
           <div className="auth-component">
             <Card>
               <AuthRoutes
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...props}
               />
             </Card>

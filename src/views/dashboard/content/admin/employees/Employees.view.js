@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { get } from 'lodash';
-import { ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
+import {
+  ExclamationCircleOutlined,
+  UserAddOutlined,
+  FilterOutlined,
+} from '@ant-design/icons';
 import {
   Button,
   Col,
@@ -13,6 +17,7 @@ import {
   Radio,
   Row,
   Spin,
+  Tooltip,
 } from 'antd';
 
 import storage from '../../../../../common/storage';
@@ -24,15 +29,14 @@ const { Content } = Layout;
 const { confirm } = Modal;
 
 const EmployeesView = ({
+  createEmployee,
+  fetchEmployees,
+  fetchEmployee,
+  updateEmployee,
+  deleteEmployee,
+  employee,
   employees,
   statusUpdate,
-  createEmployee,
-  getAllEmployees,
-  loading,
-  deleteEmployee,
-  getSingleEmployee,
-  employee,
-  updateEmployee,
 }) => {
   const [visibleAdd, setVisibleAdd] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
@@ -50,12 +54,12 @@ const EmployeesView = ({
   };
 
   useEffect(() => {
-    getAllEmployees();
+    fetchEmployees();
   }, [status[statusUpdate]]);
 
   useEffect(() => {
     if (id) {
-      getSingleEmployee(id);
+      fetchEmployee(id);
     }
   }, [id]);
 
@@ -117,7 +121,8 @@ const EmployeesView = ({
             setId={setId}
           />
         </Col>
-        <Col span={8}>
+        <Col span={2} />
+        <Col span={8} style={{ paddingLeft: '6px' }}>
           <Radio.Group onChange={onRadioChange} defaultValue="">
             <Radio.Button value="Front-End">Front-End</Radio.Button>
             <Radio.Button value="Back-End">Back-End</Radio.Button>
@@ -125,17 +130,22 @@ const EmployeesView = ({
             <Radio.Button value="">All</Radio.Button>
           </Radio.Group>
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <Form.Item>
             <Input
-              placeholder="filter by name"
+              placeholder="Filter By Name"
+              suffix={(
+                <Tooltip title="Filtered Results">
+                  <FilterOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                </Tooltip>
+              )}
               onChange={handleSearch}
               onClick={handleClick}
             />
           </Form.Item>
         </Col>
       </Row>
-      {loading ? (
+      {statusUpdate === 'FETCHING' ? (
         <Spin
           size="large"
           tip="Loading..."
@@ -145,7 +155,6 @@ const EmployeesView = ({
         <TableHeader
           employees={employees}
           setId={setId}
-          loading={loading}
           showDeleteConfirm={showDeleteConfirm}
           showModalForUpdate={showModalUpdate}
           search={search}
@@ -164,11 +173,10 @@ EmployeesView.defaultProps = {
 
 EmployeesView.propTypes = {
   createEmployee: PropTypes.func.isRequired,
-  getAllEmployees: PropTypes.func.isRequired,
-  deleteEmployee: PropTypes.func.isRequired,
-  getSingleEmployee: PropTypes.func.isRequired,
+  fetchEmployees: PropTypes.func.isRequired,
+  fetchEmployee: PropTypes.func.isRequired,
   updateEmployee: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  deleteEmployee: PropTypes.func.isRequired,
   employees: PropTypes.any.isRequired,
   employee: PropTypes.object,
   statusUpdate: PropTypes.string.isRequired,
