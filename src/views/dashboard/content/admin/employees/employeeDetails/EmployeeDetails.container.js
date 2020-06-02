@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Employee from './EmployeeDetails.view';
-import { fetchEmployee } from './employees.api';
+import { fetchEmployee } from '../employees.api';
 
 const EmployeeDetailsContainer = () => {
   const dispatch = useDispatch();

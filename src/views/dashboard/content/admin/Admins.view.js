@@ -3,7 +3,7 @@ import React from 'react';
 
 import ProtectedComponent from '../../../../components/ProtectedComponent';
 import EmployeesView from './employees/Employees.container';
-import EmployeeDetailsContainer from './employees/EmployeeDetails.container';
+import EmployeeDetailsContainer from './employees/employeeDetails/EmployeeDetails.container';
 
 const { Content } = Layout;
 
